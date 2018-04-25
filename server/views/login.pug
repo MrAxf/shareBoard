@@ -1,0 +1,66 @@
+extends layout_navbar
+
+block inside
+  .row.h-100
+    .col-12.col-md-6.bg-success.text-white.px-2.px-sm-5
+      .row.h-100.align-items-center
+        .col
+          h1 Log In
+          form.mt-5(action="")
+            .form-group.row
+              label.col-sm-2.col-form-label(for="usernameL") Username
+              .col-sm-10
+                .input-group
+                  .input-group-prepend
+                    .input-group-text
+                      i.material-icons person
+                  input#usernameL.form-control(type="text", name="usernameL", placeholder="Username")
+            .form-group.row
+              label.col-sm-2.col-form-label(for="passwordL") Password
+              .col-sm-10
+                .input-group
+                  .input-group-prepend
+                    .input-group-text
+                      i.material-icons vpn_key
+                  input#passwordL.form-control(type="password", name="passwordL", placeholder="Password")
+            .form-group.row
+              p#login-error.text-error
+            .form-group.row
+              input.btn.btn-primary(type="submit", value="Log In")
+
+          
+    .col-12.col-md-6.px-2.px-sm-5
+      .row.h-100.align-items-center
+        .col
+          h1 Sign In
+          form.mt-5(action="")
+            .form-group.row
+              label.col-sm-2.col-form-label(for="usernameS") Username
+              .col-sm-10
+                .input-group
+                  .input-group-prepend
+                    .input-group-text
+                      i.material-icons person
+                  input#usernameS.form-control(type="text", name="usernameS", placeholder="Username")
+            .form-group.row
+              p#username-error.text-error
+            .form-group.row
+              label.col-sm-2.col-form-label(for="passwordS") Password
+              .col-sm-10
+                .input-group
+                  .input-group-prepend
+                    .input-group-text
+                      i.material-icons vpn_key
+                  input#passwordS.form-control(type="password", name="passwordS", placeholder="Password")
+            .form-group.row
+              label.col-sm-2.col-form-label(for="passwordRepeatS") Repeat password
+              .col-sm-10
+                .input-group
+                  .input-group-prepend
+                    .input-group-text
+                      i.material-icons vpn_key
+                  input#passwordRepeatS.form-control(type="password", name="passwordRepeatS", placeholder="Password")
+            .form-group.row
+              p#password-error.text-error
+            .form-group.row
+              input.btn.btn-primary(type="submit", value="Sign In")

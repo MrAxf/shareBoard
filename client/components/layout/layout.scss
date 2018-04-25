@@ -1,0 +1,22 @@
+.layout{
+  .inner{
+    width: 100%;
+    height: calc(100%  - 24px);
+    .menu{
+      float: left;
+      width: 20rem;
+      height: 100%;
+    }
+    .main{
+      float: left;
+      width: calc(100% - 20rem);
+      height: 100%;
+      .content{
+        width: 100%;
+        height: calc(100% - 56px);
+        overflow-y: scroll;
+        overflow-x: hidden;
+      }
+    }
+  }
+}

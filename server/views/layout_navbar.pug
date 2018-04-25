@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
+    a.navbar-brand(href='/')
+      h4.mb-0 ShareBoard
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNavAltMarkup', aria-controls='navbarNavAltMarkup', aria-expanded='false', aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+    #navbarNavAltMarkup.collapse.navbar-collapse
+      .navbar-nav
+        a.nav-item.nav-link(href='/about') About
+        a.nav-item.nav-link(href='/login') Log in
+  
+  main.container-fluid
+    block inside
+  
+  footer.bg-dark.text-white.text-center
+    p.mb-0 &copy; Axford
