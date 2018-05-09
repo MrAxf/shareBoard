@@ -24,7 +24,7 @@ block inside
                       i.material-icons vpn_key
                   input#passwordL.form-control(type="password", name="passwordL", placeholder="Password")
             .form-group.row
-              p#login-error.text-error
+              p#login-error.text-danger
             .form-group.row
               input.btn.btn-primary(type="submit", value="Log In")
 
@@ -33,7 +33,7 @@ block inside
       .row.h-100.align-items-center
         .col
           h1 Sign In
-          form.mt-5(action="")
+          form#registerForm.mt-5
             .form-group.row
               label.col-sm-2.col-form-label(for="usernameS") Username
               .col-sm-10
@@ -43,7 +43,7 @@ block inside
                       i.material-icons person
                   input#usernameS.form-control(type="text", name="usernameS", placeholder="Username")
             .form-group.row
-              p#username-error.text-error
+              p#username-error.text-danger
             .form-group.row
               label.col-sm-2.col-form-label(for="passwordS") Password
               .col-sm-10
@@ -61,6 +61,58 @@ block inside
                       i.material-icons vpn_key
                   input#passwordRepeatS.form-control(type="password", name="passwordRepeatS", placeholder="Password")
             .form-group.row
-              p#password-error.text-error
+              p#password-error.text-danger
             .form-group.row
-              input.btn.btn-primary(type="submit", value="Sign In")
+              p#register-success.text-success
+            .form-group.row
+              input.btn.btn-primary(type="submit", value="Sign In", on)
+  script.
+    //Define inputs
+    const usernameLogin = document.getElementById("usernameL");
+    const passwordLogin = document.getElementById("passwordL");
+
+    const usernameRegister = document.getElementById("usernameS");
+    const passwordRegister = document.getElementById("passwordS");
+    const passwordRepeatRegister = document.getElementById("passwordRepeatS");
+
+    const usernameErrorLabel = document.getElementById("username-error");
+    const passwordErrorLabel = document.getElementById("password-error");
+    const registerSuccessLabel = document.getElementById("register-success");
+
+    const errors = {
+      MissingPasswordError(msg){
+        passwordErrorLabel.innerHTML = msg;
+      }
+    }
+
+    function cleanRegisterErrors(){
+      usernameErrorLabel.innerHTML = "";
+      passwordErrorLabel.innerHTML = "";
+      registerSuccessLabel.innerHTML = "";
+    }
+
+    function register(e){
+      e.preventDefault();
+      console.log(JSON.stringify({
+          "username": usernameRegister.value,
+          "password": passwordRegister.value
+        }));
+      cleanRegisterErrors();
+      fetch(`/user/register`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          "username": usernameRegister.value,
+          "password": passwordRegister.value
+        })
+      }).then(res => res.json())
+        .then(res => {
+          console.log(res);
+          if(res.error) errors[res.error](res.message);
+        });
+
+    }
+
+    window.onload = () => {
+      document.getElementById("registerForm").onsubmit = register;
+    }

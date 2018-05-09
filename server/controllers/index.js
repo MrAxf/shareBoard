@@ -6,6 +6,7 @@ module.exports = {
     res.render("about", {title: "About"});
   },
   login(req, res) {
+    if(req.user) res.redirect('/app');
     res.render("login", {title: "Log in"});
   },
   app(req, res) {

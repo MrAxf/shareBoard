@@ -5,9 +5,9 @@
  */
 
 const app = require('../../app');
-//const mongoose = require('mongoose');
 const debug = require('debug')('mean:server');
 const http = require('http');
+const mongoose = require('mongoose');
 
 /**
  * Normalize a port into a number, string, or false.
@@ -80,10 +80,10 @@ app.set('port', port);
  * Connect to database
  */
 
-/*const mongoURI = process.env.MONGOURI || 'mongodb://localhost/loc8r';
+const mongoURI = process.env.MONGOURI || 'mongodb://localhost/shareboard';
 mongoose.connect(mongoURI)
   .then(() => console.log("Conected to MongoDB"))
-  .catch(err => console.log(err.message));*/
+  .catch(err => console.log(err.message));
 
 /**
  * Create HTTP server.
