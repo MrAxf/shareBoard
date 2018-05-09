@@ -19,9 +19,12 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+
+const secret = 'devSecretTeah897kaj';
+
+app.use(cookieParser(secret));
 app.use(require('express-session')({
-  secret: 'jH8HiijJ8hg8(Hh(jh',
+  secret,
   resave: false,
   saveUninitialized: false
 }));
@@ -34,7 +37,7 @@ app.use('/user', userRouter);
 
 // passport config
 const User = require('./server/models/user');
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 

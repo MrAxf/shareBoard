@@ -6,7 +6,7 @@ block inside
       .row.h-100.align-items-center
         .col
           h1 Log In
-          form.mt-5(action="")
+          form#loginForm.mt-5
             .form-group.row
               label.col-sm-2.col-form-label(for="usernameL") Username
               .col-sm-10
@@ -24,7 +24,7 @@ block inside
                       i.material-icons vpn_key
                   input#passwordL.form-control(type="password", name="passwordL", placeholder="Password")
             .form-group.row
-              p#login-error.text-danger
+              p#login-error.text-danger.font-weight-bold
             .form-group.row
               input.btn.btn-primary(type="submit", value="Log In")
 
@@ -43,7 +43,7 @@ block inside
                       i.material-icons person
                   input#usernameS.form-control(type="text", name="usernameS", placeholder="Username")
             .form-group.row
-              p#username-error.text-danger
+              p#username-error.text-danger.font-weight-bold
             .form-group.row
               label.col-sm-2.col-form-label(for="passwordS") Password
               .col-sm-10
@@ -61,9 +61,9 @@ block inside
                       i.material-icons vpn_key
                   input#passwordRepeatS.form-control(type="password", name="passwordRepeatS", placeholder="Password")
             .form-group.row
-              p#password-error.text-danger
+              p#password-error.text-danger.font-weight-bold
             .form-group.row
-              p#register-success.text-success
+              p#register-success.text-success.font-weight-bold
             .form-group.row
               input.btn.btn-primary(type="submit", value="Sign In", on)
   script.
@@ -79,9 +79,26 @@ block inside
     const passwordErrorLabel = document.getElementById("password-error");
     const registerSuccessLabel = document.getElementById("register-success");
 
+    const loginErrorLabel = document.getElementById("login-error");
+
     const errors = {
       MissingPasswordError(msg){
         passwordErrorLabel.innerHTML = msg;
+      },
+      BulkWriteError(){
+        usernameErrorLabel.innerHTML = "Username alredy taken.";
+      },
+      TooShortUsername(){
+        usernameErrorLabel.innerHTML = "Username must have at least 4 characters.";
+      },
+      TooShortPassword(){
+        passwordErrorLabel.innerHTML = "Password must have at least 4 characters.";
+      },
+      PasswordsDontMatch(){
+        passwordErrorLabel.innerHTML = "Password don't match.";
+      },
+      LoginError(){
+        loginErrorLabel.innerHTML = "Username or password is incorrect.";
       }
     }
 
@@ -93,26 +110,60 @@ block inside
 
     function register(e){
       e.preventDefault();
-      console.log(JSON.stringify({
-          "username": usernameRegister.value,
-          "password": passwordRegister.value
-        }));
       cleanRegisterErrors();
+
+      if(usernameRegister.value.length < 4) {
+        errors["TooShortUsername"]();
+        return;
+      }
+      if(passwordRegister.value.length < 4) {
+        errors["TooShortPassword"]();
+        return;
+      }
+      if(passwordRegister.value != passwordRepeatRegister.value) {
+        errors["PasswordsDontMatch"]();
+        return;
+      }
+
       fetch(`/user/register`, {
         method: 'POST',
+        credentials: "same-origin",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           "username": usernameRegister.value,
           "password": passwordRegister.value
-        })
-      }).then(res => res.json())
+        })})
+        .then(res => res.json())
         .then(res => {
-          console.log(res);
           if(res.error) errors[res.error](res.message);
-        });
+          else{
+            usernameRegister.value = "";
+            passwordRegister.value = "";
+            passwordRepeatRegister.value = "";
+            registerSuccessLabel.innerHTML = res.message;
+          }
+      });
 
+    }
+
+    function login(e){
+      e.preventDefault();
+      loginErrorLabel.innerHTML = "";
+
+      fetch(`/user/login`, {
+        method: 'POST',
+        credentials: "same-origin",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          "username": usernameLogin.value,
+          "password": passwordLogin.value
+        })})
+        .then(res => res.json())
+        .then(res => window.location.href = `${window.location.origin}/app`)
+        .catch(err => errors['LoginError']());
     }
 
     window.onload = () => {
       document.getElementById("registerForm").onsubmit = register;
+      document.getElementById("loginForm").onsubmit = login;
     }

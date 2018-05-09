@@ -234,6 +234,23 @@ exports.default = function () {
       "a",
       { className: "navbar-brand", href: "#" },
       "Navbar"
+    ),
+    _react2.default.createElement(
+      "ul",
+      { className: "navbar-nav ml-auto" },
+      _react2.default.createElement(
+        "li",
+        { className: "nav-item" },
+        _react2.default.createElement(
+          "a",
+          { href: "/user/logout", className: "nav-link" },
+          _react2.default.createElement(
+            "i",
+            { className: "material-icons" },
+            "exit_to_app"
+          )
+        )
+      )
     )
   );
 };

@@ -3,7 +3,6 @@ const User = require('../models/user');
 module.exports = {
   async register(req, res){
     res.setHeader('Content-Type', 'application/json');
-    console.log(req.body);
     try {
       const { username, password } = req.body;
       const user = new User({username});
@@ -11,7 +10,7 @@ module.exports = {
       await user.save();
       res.send(JSON.stringify({
         "error": 0,
-        "message": "Register succesfull"
+        "message": "Register successfull"
       }));
     } catch (err) {
       res.send(JSON.stringify({
@@ -20,25 +19,18 @@ module.exports = {
       }));
     }
   },
-  async login(req, res){
-    res.setHeader('Content-Type', 'application/json');
-    try {
-      const { username, password } = req.body;
-      const { user } = await User.authenticate()(username, password);
-      res.send(JSON.stringify({
-        "error": 0,
-        "message": "Login succesfull"
-      }));
-    } catch (err) {
-      console.log(err);
-    }
+  login(req, res){
+    res.send(JSON.stringify({
+      "error": 0,
+      "message": "Login succesfull"
+    }));
   },
   logout(req, res){
     req.logout();
     res.redirect("/");
   },
   loggedIn(req, res, next){
-    if(req.user) next();
+    if(req.isAuthenticated()) next();
     else res.redirect('/login');
   }
 }

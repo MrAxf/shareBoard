@@ -3,11 +3,11 @@
   height: calc(100%  - 24px); }
   .layout .inner .menu {
     float: left;
-    width: 20rem;
+    width: 280px;
     height: 100%; }
   .layout .inner .main {
     float: left;
-    width: calc(100% - 20rem);
+    width: calc(100% - 280px);
     height: 100%; }
     .layout .inner .main .content {
       width: 100%;
