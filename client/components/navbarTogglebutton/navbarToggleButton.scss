@@ -1,0 +1,84 @@
+@mixin bars-no-active(){
+  &:nth-child(1){
+    width: 30px;
+    transform: translateY(0px) rotate(0deg);
+  }
+  &:nth-child(2){
+    width: 30px;
+    transform: translateY(0px) rotate(0deg);
+  }
+  &:nth-child(3){
+    width: 30px;
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+@mixin bars-active(){
+  &:nth-child(1){
+    width: 15px;
+    transform: translateY(4px) rotate(-225deg);
+  }
+  &:nth-child(2){
+    width: 30px;
+    transform: rotate(180deg);
+  }
+  &:nth-child(3){
+    width: 15px;
+    transform: translateY(-4px) rotate(225deg);
+  }
+}
+
+.navbar-toggle-button{
+  position: relative;
+  width: 30px;
+  height: 25px;
+  box-sizing: border-box;
+  cursor: pointer;
+  .bar{
+    position: absolute;
+    background: white;
+    height: 5px;
+    transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
+    &:nth-child(1){
+      top: 0;
+      left: 0;
+    }
+    &:nth-child(2){
+      top: 10px;
+      left: 0;
+    }
+    &:nth-child(3){
+      top: 20px;
+      left: 0;
+    }
+  }
+}
+.navbar-toggle-button-no-active{
+  .bar{
+    @include bars-no-active();
+  }  
+  &:hover{
+    .bar{
+      &:nth-child(1){
+        transform: translateY(3px) rotate(0deg);
+      }
+      &:nth-child(3){
+        transform: translateY(-3px) rotate(0deg);
+      }
+    }
+  }
+}
+.navbar-toggle-button-active{
+  .bar{
+    @include bars-active();
+  }
+  &:hover{
+    .bar{
+      &:nth-child(1){
+        transform: translateY(8px) rotate(-195deg);
+      }
+      &:nth-child(3){
+        transform: translateY(-8px) rotate(195deg);
+      }
+    }
+  }
+}

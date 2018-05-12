@@ -1,19 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Material+Icons|Pacifico|Roboto);.layout .inner {
-  width: 100%;
-  height: calc(100%  - 24px); }
-  .layout .inner .menu {
-    float: left;
-    width: 280px;
-    height: 100%; }
-  .layout .inner .main {
-    float: left;
-    width: calc(100% - 280px);
-    height: 100%; }
-    .layout .inner .main .content {
-      width: 100%;
-      height: calc(100% - 56px);
-      overflow-y: scroll;
-      overflow-x: hidden; }
+@import url(https://fonts.googleapis.com/css?family=Material+Icons|Pacifico|Roboto);
 /*!
  * Bootstrap v4.1.0 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
@@ -6316,5 +6301,86 @@ main {
   object-fit: cover;
   object-position: center;
   filter: brightness(0.4); }
+
+.layout .inner {
+  width: 100%;
+  height: calc(100%  - 24px); }
+  .layout .inner .main {
+    height: 100%;
+    overflow: hidden; }
+    .layout .inner .main .content {
+      width: 100%;
+      height: calc(100% - 47px);
+      overflow-y: scroll;
+      overflow-x: hidden; }
+
+.navbar-component .nav-link {
+  padding: 0; }
+
+.navbar-toggle-button {
+  position: relative;
+  width: 30px;
+  height: 25px;
+  box-sizing: border-box;
+  cursor: pointer; }
+  .navbar-toggle-button .bar {
+    position: absolute;
+    background: white;
+    height: 5px;
+    transition: transform 0.5s ease-in-out, width 0.5s ease-in-out; }
+    .navbar-toggle-button .bar:nth-child(1) {
+      top: 0;
+      left: 0; }
+    .navbar-toggle-button .bar:nth-child(2) {
+      top: 10px;
+      left: 0; }
+    .navbar-toggle-button .bar:nth-child(3) {
+      top: 20px;
+      left: 0; }
+
+.navbar-toggle-button-no-active .bar:nth-child(1) {
+  width: 30px;
+  transform: translateY(0px) rotate(0deg); }
+
+.navbar-toggle-button-no-active .bar:nth-child(2) {
+  width: 30px;
+  transform: translateY(0px) rotate(0deg); }
+
+.navbar-toggle-button-no-active .bar:nth-child(3) {
+  width: 30px;
+  transform: translateY(0px) rotate(0deg); }
+
+.navbar-toggle-button-no-active:hover .bar:nth-child(1) {
+  transform: translateY(3px) rotate(0deg); }
+
+.navbar-toggle-button-no-active:hover .bar:nth-child(3) {
+  transform: translateY(-3px) rotate(0deg); }
+
+.navbar-toggle-button-active .bar:nth-child(1) {
+  width: 15px;
+  transform: translateY(4px) rotate(-225deg); }
+
+.navbar-toggle-button-active .bar:nth-child(2) {
+  width: 30px;
+  transform: rotate(180deg); }
+
+.navbar-toggle-button-active .bar:nth-child(3) {
+  width: 15px;
+  transform: translateY(-4px) rotate(225deg); }
+
+.navbar-toggle-button-active:hover .bar:nth-child(1) {
+  transform: translateY(8px) rotate(-195deg); }
+
+.navbar-toggle-button-active:hover .bar:nth-child(3) {
+  transform: translateY(-8px) rotate(195deg); }
+
+.sidenav {
+  float: left;
+  width: 280px;
+  height: 100%;
+  transition: width 0.5s ease-in-out; }
+  .sidenav.closed {
+    width: 0px; }
+
 
 /*# sourceMappingURL=style.css.map*/

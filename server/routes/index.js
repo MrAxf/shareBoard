@@ -6,6 +6,6 @@ const { loggedIn } = require('../controllers/user');
 router.get('/', index);
 router.get('/about', about);
 router.get('/login', login);
-router.get('/app', loggedIn, app);
+router.get('/app*', loggedIn, app);
 
 module.exports = router;

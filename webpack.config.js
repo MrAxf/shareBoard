@@ -1,10 +1,7 @@
 const path = require('path');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const WebpackShellPlugin = require('webpack-shell-plugin');
 
-const extractSass = new ExtractTextPlugin({
-  filename: "../css/style.css"
-});
 const shellPlugin = new WebpackShellPlugin({
   onBuildEnd: ['nodemon']
 });
@@ -26,20 +23,18 @@ const conf = {
       },
       {
         test: /\.scss$/,
-        use: extractSass.extract({
-          use: [{
-            loader: "css-loader"
-          }, {
-            loader: "sass-loader"
-          }],
-          // use style-loader in development
-          fallback: "style-loader"
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "sass-loader"
+        ]
       }
     ]
   },
   plugins: [
-    extractSass
+    new MiniCssExtractPlugin({
+      filename: "../css/style.css"
+    })
   ]
 };
 
