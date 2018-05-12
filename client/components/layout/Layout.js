@@ -25,7 +25,7 @@ export default class Layout extends Component{
           </RootConsumer>
           <div className="main">
             <Navbar toggleButtonState={this.state.sidenavOpen} toggleButtonHandler={this.toggleButtonHandler.bind(this)}/>
-            <div className="content p-5">
+            <div className="content">
               {this.props.children}
             </div>
           </div>

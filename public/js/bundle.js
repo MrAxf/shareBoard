@@ -103,9 +103,17 @@ var _Projects = __webpack_require__(/*! ./pages/proyects/Projects */ "./client/p
 
 var _Projects2 = _interopRequireDefault(_Projects);
 
+var _AddBlackboard = __webpack_require__(/*! ./pages/addBlackboard/AddBlackboard */ "./client/pages/addBlackboard/AddBlackboard.js");
+
+var _AddBlackboard2 = _interopRequireDefault(_AddBlackboard);
+
 var _Blackboard = __webpack_require__(/*! ./pages/blackboard/Blackboard */ "./client/pages/blackboard/Blackboard.js");
 
 var _Blackboard2 = _interopRequireDefault(_Blackboard);
+
+var _NotFound = __webpack_require__(/*! ./pages/notFound/NotFound */ "./client/pages/notFound/NotFound.js");
+
+var _NotFound2 = _interopRequireDefault(_NotFound);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -134,24 +142,26 @@ var App = function (_Component) {
           _Layout2.default,
           null,
           _react2.default.createElement(
-            _reactRouterDom.Switch,
+            _RootProvider.RootConsumer,
             null,
-            _react2.default.createElement(
-              _RootProvider.RootConsumer,
-              null,
-              function (context) {
-                return _react2.default.createElement(
-                  _react2.default.Fragment,
-                  null,
-                  _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/app', render: function render() {
-                      return _react2.default.createElement(_Projects2.default, { rootData: context, sidenavEnable: _RootProvider.RootActions.DISABLE_SIDEBAR });
-                    } }),
-                  _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/app/blackboard', render: function render() {
-                      return _react2.default.createElement(_Blackboard2.default, { rootData: context, sidenavEnable: _RootProvider.RootActions.ENABLE_SIDEBAR });
-                    } })
-                );
-              }
-            )
+            function (context) {
+              return _react2.default.createElement(
+                _reactRouterDom.Switch,
+                null,
+                _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/app', render: function render() {
+                    return _react2.default.createElement(_Projects2.default, { rootData: context, sidenavEnable: _RootProvider.RootActions.DISABLE_SIDEBAR });
+                  } }),
+                _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/app/addblackboard', render: function render() {
+                    return _react2.default.createElement(_AddBlackboard2.default, { rootData: context, sidenavEnable: _RootProvider.RootActions.DISABLE_SIDEBAR });
+                  } }),
+                _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/app/blackboard', render: function render() {
+                    return _react2.default.createElement(_Blackboard2.default, { rootData: context, sidenavEnable: _RootProvider.RootActions.ENABLE_SIDEBAR });
+                  } }),
+                _react2.default.createElement(_reactRouterDom.Route, { render: function render() {
+                    return _react2.default.createElement(_NotFound2.default, { rootData: context, sidenavEnable: _RootProvider.RootActions.DISABLE_SIDEBAR });
+                  } })
+              );
+            }
           )
         )
       );
@@ -162,6 +172,151 @@ var App = function (_Component) {
 }(_react.Component);
 
 exports.default = App;
+
+/***/ }),
+
+/***/ "./client/components/blackboardLink/BlackboardLink.js":
+/*!************************************************************!*\
+  !*** ./client/components/blackboardLink/BlackboardLink.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.BlackboardLink = exports.AddBlackboardLink = undefined;
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+__webpack_require__(/*! ./blackboardLink.scss */ "./client/components/blackboardLink/blackboardLink.scss");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var AddBlackboardLink = exports.AddBlackboardLink = function AddBlackboardLink() {
+  return _react2.default.createElement(
+    'div',
+    { className: 'blackboard-link col col-12 col-sm-6 col-md-4 col-lg-3 p-2' },
+    _react2.default.createElement(
+      _reactRouterDom.Link,
+      { className: 'card text-center', to: '/app/addblackboard' },
+      _react2.default.createElement(
+        'i',
+        { className: 'material-icons mt-5' },
+        'add_circle_outline'
+      ),
+      _react2.default.createElement(
+        'p',
+        null,
+        'Add new board'
+      )
+    )
+  );
+};
+
+var BlackboardLink = exports.BlackboardLink = function BlackboardLink(_ref) {
+  var blackboard = _ref.blackboard;
+
+  return _react2.default.createElement(
+    'div',
+    { className: 'blackboard-link col col-12 col-sm-6 col-md-4 col-lg-3 p-2' },
+    _react2.default.createElement(
+      _reactRouterDom.Link,
+      { className: 'card board p-2', to: '/app/blackboar/' + blackboard.id },
+      _react2.default.createElement(
+        'h5',
+        { className: 'card-title' },
+        blackboard.title
+      ),
+      _react2.default.createElement(
+        'p',
+        { className: 'card-text' },
+        blackboard.description
+      )
+    )
+  );
+};
+
+/***/ }),
+
+/***/ "./client/components/blackboardLink/blackboardLink.scss":
+/*!**************************************************************!*\
+  !*** ./client/components/blackboardLink/blackboardLink.scss ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./client/components/header/Header.js":
+/*!********************************************!*\
+  !*** ./client/components/header/Header.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(/*! ./header.scss */ "./client/components/header/header.scss");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (_ref) {
+  var children = _ref.children,
+      title = _ref.title;
+
+  return _react2.default.createElement(
+    'div',
+    { className: 'row header-component bg-success text-white px-2 px-md-5' },
+    _react2.default.createElement(
+      'div',
+      { className: 'container' },
+      _react2.default.createElement(
+        'div',
+        { className: 'row' },
+        _react2.default.createElement(
+          'h1',
+          { className: 'my-5' },
+          title
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'row' },
+        children
+      )
+    )
+  );
+};
+
+/***/ }),
+
+/***/ "./client/components/header/header.scss":
+/*!**********************************************!*\
+  !*** ./client/components/header/header.scss ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -253,7 +408,7 @@ var Layout = function (_Component) {
             _react2.default.createElement(_Navbar2.default, { toggleButtonState: this.state.sidenavOpen, toggleButtonHandler: this.toggleButtonHandler.bind(this) }),
             _react2.default.createElement(
               'div',
-              { className: 'content p-5' },
+              { className: 'content' },
               this.props.children
             )
           )
@@ -568,7 +723,6 @@ var Page = function (_Component) {
           rootData = _props.rootData,
           sidenavEnable = _props.sidenavEnable;
 
-      console.log(this.props);
       rootData.dispatch(sidenavEnable);
     }
   }]);
@@ -577,6 +731,143 @@ var Page = function (_Component) {
 }(_react.Component);
 
 exports.default = Page;
+
+/***/ }),
+
+/***/ "./client/pages/addBlackboard/AddBlackboard.js":
+/*!*****************************************************!*\
+  !*** ./client/pages/addBlackboard/AddBlackboard.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(/*! ./addBlackboard.scss */ "./client/pages/addBlackboard/addBlackboard.scss");
+
+var _Page2 = __webpack_require__(/*! ../Page */ "./client/pages/Page.js");
+
+var _Page3 = _interopRequireDefault(_Page2);
+
+var _Header = __webpack_require__(/*! ../../components/header/Header */ "./client/components/header/Header.js");
+
+var _Header2 = _interopRequireDefault(_Header);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AddBlackboard = function (_Page) {
+  _inherits(AddBlackboard, _Page);
+
+  function AddBlackboard() {
+    _classCallCheck(this, AddBlackboard);
+
+    return _possibleConstructorReturn(this, (AddBlackboard.__proto__ || Object.getPrototypeOf(AddBlackboard)).apply(this, arguments));
+  }
+
+  _createClass(AddBlackboard, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'add-blackboard container-fluid' },
+        _react2.default.createElement(
+          _Header2.default,
+          { title: 'Create a blackboard.' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col col-12 col-md-6' },
+            _react2.default.createElement(
+              'h3',
+              { className: 'mb-3' },
+              'Complete the form to create a blackboard'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'container form py-5' },
+          _react2.default.createElement(
+            'form',
+            null,
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group row' },
+              _react2.default.createElement(
+                'label',
+                { htmlFor: 'title', className: 'col-sm-2 col-form-label' },
+                'Title'
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'col-sm-10' },
+                _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'title', placeholder: 'Title' })
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group row' },
+              _react2.default.createElement(
+                'label',
+                { htmlFor: 'description', className: 'col-sm-2 col-form-label' },
+                'Description'
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'col-sm-10' },
+                _react2.default.createElement('textarea', { className: 'form-control', id: 'description', placeholder: 'Description' })
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group row' },
+              _react2.default.createElement(
+                'div',
+                { className: 'col-sm-10' },
+                _react2.default.createElement(
+                  'button',
+                  { type: 'submit', className: 'btn btn-primary' },
+                  'Add blackboard'
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return AddBlackboard;
+}(_Page3.default);
+
+exports.default = AddBlackboard;
+
+/***/ }),
+
+/***/ "./client/pages/addBlackboard/addBlackboard.scss":
+/*!*******************************************************!*\
+  !*** ./client/pages/addBlackboard/addBlackboard.scss ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -643,6 +934,135 @@ exports.default = Blackboard;
 
 /***/ }),
 
+/***/ "./client/pages/notFound/NotFound.js":
+/*!*******************************************!*\
+  !*** ./client/pages/notFound/NotFound.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+__webpack_require__(/*! ./notFound.scss */ "./client/pages/notFound/notFound.scss");
+
+var _Page2 = __webpack_require__(/*! ../Page */ "./client/pages/Page.js");
+
+var _Page3 = _interopRequireDefault(_Page2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var NotFound = function (_Page) {
+  _inherits(NotFound, _Page);
+
+  function NotFound() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, NotFound);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = NotFound.__proto__ || Object.getPrototypeOf(NotFound)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      number1: Math.floor(Math.random() * 9),
+      number2: Math.floor(Math.random() * 9),
+      number3: Math.floor(Math.random() * 9)
+    }, _this.then = 0, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(NotFound, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.then = Date.now();
+      this.animate(0);
+    }
+  }, {
+    key: 'getNumber',
+    value: function getNumber(index, time) {
+      if (time < 1000 * index) return Math.floor(Math.random() * 9);else if (index == 1) return 4;
+      return 0;
+    }
+  }, {
+    key: 'animate',
+    value: function animate(time) {
+      var now = Date.now();
+      var delta = now - this.then;
+      this.then = now;
+
+      time += delta;
+
+      this.setState({
+        number1: this.getNumber(1, time),
+        number2: this.getNumber(2, time),
+        number3: Math.floor(Math.random() * 9)
+      });
+
+      if (time < 3000) requestAnimationFrame(this.animate.bind(this, time));else this.setState({ number3: 4 });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'not-found bg-success text-white text-center h-100 pt-5' },
+        _react2.default.createElement(
+          'h1',
+          { className: 'text-center' },
+          '' + this.state.number1 + this.state.number2 + this.state.number3
+        ),
+        _react2.default.createElement(
+          'h5',
+          { className: 'text-center mb-5' },
+          'Page not found'
+        ),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/app', className: 'btn btn-primary' },
+          'Back to main page'
+        )
+      );
+    }
+  }]);
+
+  return NotFound;
+}(_Page3.default);
+
+exports.default = NotFound;
+
+/***/ }),
+
+/***/ "./client/pages/notFound/notFound.scss":
+/*!*********************************************!*\
+  !*** ./client/pages/notFound/notFound.scss ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "./client/pages/proyects/Projects.js":
 /*!*******************************************!*\
   !*** ./client/pages/proyects/Projects.js ***!
@@ -665,9 +1085,17 @@ var _react2 = _interopRequireDefault(_react);
 
 var _RootProvider = __webpack_require__(/*! ../../providers/RootProvider */ "./client/providers/RootProvider.js");
 
+__webpack_require__(/*! ./project.scss */ "./client/pages/proyects/project.scss");
+
 var _Page2 = __webpack_require__(/*! ../Page */ "./client/pages/Page.js");
 
 var _Page3 = _interopRequireDefault(_Page2);
+
+var _Header = __webpack_require__(/*! ../../components/header/Header */ "./client/components/header/Header.js");
+
+var _Header2 = _interopRequireDefault(_Header);
+
+var _BlackboardLink = __webpack_require__(/*! ../../components/blackboardLink/BlackboardLink */ "./client/components/blackboardLink/BlackboardLink.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -681,9 +1109,17 @@ var Projects = function (_Page) {
   _inherits(Projects, _Page);
 
   function Projects() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, Projects);
 
-    return _possibleConstructorReturn(this, (Projects.__proto__ || Object.getPrototypeOf(Projects)).apply(this, arguments));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Projects.__proto__ || Object.getPrototypeOf(Projects)).call.apply(_ref, [this].concat(args))), _this), _this.test = [{ id: 1, title: "Blackboard 1", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam quo magnam eos unde tempore praesentium saepe facilis incidunt, iste nam." }, { id: 2, title: "Blackboard 2", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam quo magnam eos unde tempore praesentium saepe facilis incidunt, iste nam." }, { id: 3, title: "Blackboard 3", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam quo magnam eos unde tempore praesentium saepe facilis incidunt, iste nam." }, { id: 4, title: "Blackboard 4", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam quo magnam eos unde tempore praesentium saepe facilis incidunt, iste nam." }, { id: 5, title: "Blackboard 5", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam quo magnam eos unde tempore praesentium saepe facilis incidunt, iste nam." }], _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Projects, [{
@@ -691,11 +1127,36 @@ var Projects = function (_Page) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'projects container-fluid' },
         _react2.default.createElement(
-          'h1',
-          null,
-          'Hello!'
+          _Header2.default,
+          { title: 'Welcome to ShareBoard!' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col col-12 col-md-6' },
+            _react2.default.createElement(
+              'h3',
+              { className: 'mb-3' },
+              'A place to create your personal blackboards and share it in live!'
+            ),
+            _react2.default.createElement(
+              'h5',
+              null,
+              'Select or create one.'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'container' },
+          _react2.default.createElement(
+            'div',
+            { className: 'row' },
+            _react2.default.createElement(_BlackboardLink.AddBlackboardLink, null),
+            this.test.map(function (item) {
+              return _react2.default.createElement(_BlackboardLink.BlackboardLink, { blackboard: item, key: item.id });
+            })
+          )
         )
       );
     }
@@ -705,6 +1166,17 @@ var Projects = function (_Page) {
 }(_Page3.default);
 
 exports.default = Projects;
+
+/***/ }),
+
+/***/ "./client/pages/proyects/project.scss":
+/*!********************************************!*\
+  !*** ./client/pages/proyects/project.scss ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 

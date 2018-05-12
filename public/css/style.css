@@ -27,6 +27,7 @@
   --danger: #dc3545;
   --light: #f8f9fa;
   --dark: #343a40;
+  --brown: #965500;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -1170,6 +1171,17 @@ pre {
   .table-hover .table-dark:hover > th {
     background-color: #b9bbbe; }
 
+.table-brown,
+.table-brown > th,
+.table-brown > td {
+  background-color: #e2cfb8; }
+
+.table-hover .table-brown:hover {
+  background-color: #dbc3a6; }
+  .table-hover .table-brown:hover > td,
+  .table-hover .table-brown:hover > th {
+    background-color: #dbc3a6; }
+
 .table-active,
 .table-active > th,
 .table-active > td {
@@ -1830,6 +1842,29 @@ fieldset:disabled a.btn {
     .show > .btn-dark.dropdown-toggle:focus {
       box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5); }
 
+.btn-brown {
+  color: #fff;
+  background-color: #965500;
+  border-color: #965500; }
+  .btn-brown:hover {
+    color: #fff;
+    background-color: #703f00;
+    border-color: #633800; }
+  .btn-brown:focus, .btn-brown.focus {
+    box-shadow: 0 0 0 0.2rem rgba(150, 85, 0, 0.5); }
+  .btn-brown.disabled, .btn-brown:disabled {
+    color: #fff;
+    background-color: #965500;
+    border-color: #965500; }
+  .btn-brown:not(:disabled):not(.disabled):active, .btn-brown:not(:disabled):not(.disabled).active,
+  .show > .btn-brown.dropdown-toggle {
+    color: #fff;
+    background-color: #633800;
+    border-color: #563100; }
+    .btn-brown:not(:disabled):not(.disabled):active:focus, .btn-brown:not(:disabled):not(.disabled).active:focus,
+    .show > .btn-brown.dropdown-toggle:focus {
+      box-shadow: 0 0 0 0.2rem rgba(150, 85, 0, 0.5); }
+
 .btn-outline-primary {
   color: #007bff;
   background-color: transparent;
@@ -2013,6 +2048,29 @@ fieldset:disabled a.btn {
     .btn-outline-dark:not(:disabled):not(.disabled):active:focus, .btn-outline-dark:not(:disabled):not(.disabled).active:focus,
     .show > .btn-outline-dark.dropdown-toggle:focus {
       box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5); }
+
+.btn-outline-brown {
+  color: #965500;
+  background-color: transparent;
+  background-image: none;
+  border-color: #965500; }
+  .btn-outline-brown:hover {
+    color: #fff;
+    background-color: #965500;
+    border-color: #965500; }
+  .btn-outline-brown:focus, .btn-outline-brown.focus {
+    box-shadow: 0 0 0 0.2rem rgba(150, 85, 0, 0.5); }
+  .btn-outline-brown.disabled, .btn-outline-brown:disabled {
+    color: #965500;
+    background-color: transparent; }
+  .btn-outline-brown:not(:disabled):not(.disabled):active, .btn-outline-brown:not(:disabled):not(.disabled).active,
+  .show > .btn-outline-brown.dropdown-toggle {
+    color: #fff;
+    background-color: #965500;
+    border-color: #965500; }
+    .btn-outline-brown:not(:disabled):not(.disabled):active:focus, .btn-outline-brown:not(:disabled):not(.disabled).active:focus,
+    .show > .btn-outline-brown.dropdown-toggle:focus {
+      box-shadow: 0 0 0 0.2rem rgba(150, 85, 0, 0.5); }
 
 .btn-link {
   font-weight: 400;
@@ -3404,6 +3462,14 @@ input[type="button"].btn-block {
     text-decoration: none;
     background-color: #1d2124; }
 
+.badge-brown {
+  color: #fff;
+  background-color: #965500; }
+  .badge-brown[href]:hover, .badge-brown[href]:focus {
+    color: #fff;
+    text-decoration: none;
+    background-color: #633800; }
+
 .jumbotron {
   padding: 2rem 1rem;
   margin-bottom: 2rem;
@@ -3511,6 +3577,15 @@ input[type="button"].btn-block {
     border-top-color: #b9bbbe; }
   .alert-dark .alert-link {
     color: #040505; }
+
+.alert-brown {
+  color: #4e2c00;
+  background-color: #eaddcc;
+  border-color: #e2cfb8; }
+  .alert-brown hr {
+    border-top-color: #dbc3a6; }
+  .alert-brown .alert-link {
+    color: #1b0f00; }
 
 @keyframes progress-bar-stripes {
   from {
@@ -3695,6 +3770,17 @@ input[type="button"].btn-block {
     color: #fff;
     background-color: #1b1e21;
     border-color: #1b1e21; }
+
+.list-group-item-brown {
+  color: #4e2c00;
+  background-color: #e2cfb8; }
+  .list-group-item-brown.list-group-item-action:hover, .list-group-item-brown.list-group-item-action:focus {
+    color: #4e2c00;
+    background-color: #dbc3a6; }
+  .list-group-item-brown.list-group-item-action.active {
+    color: #fff;
+    background-color: #4e2c00;
+    border-color: #4e2c00; }
 
 .close {
   float: right;
@@ -4307,6 +4393,14 @@ button.bg-dark:hover,
 button.bg-dark:focus {
   background-color: #1d2124 !important; }
 
+.bg-brown {
+  background-color: #965500 !important; }
+
+a.bg-brown:hover, a.bg-brown:focus,
+button.bg-brown:hover,
+button.bg-brown:focus {
+  background-color: #633800 !important; }
+
 .bg-white {
   background-color: #fff !important; }
 
@@ -4366,6 +4460,9 @@ button.bg-dark:focus {
 
 .border-dark {
   border-color: #343a40 !important; }
+
+.border-brown {
+  border-color: #965500 !important; }
 
 .border-white {
   border-color: #fff !important; }
@@ -6195,6 +6292,12 @@ a.text-light:hover, a.text-light:focus {
 a.text-dark:hover, a.text-dark:focus {
   color: #1d2124 !important; }
 
+.text-brown {
+  color: #965500 !important; }
+
+a.text-brown:hover, a.text-brown:focus {
+  color: #633800 !important; }
+
 .text-body {
   color: #212529 !important; }
 
@@ -6311,7 +6414,7 @@ main {
     .layout .inner .main .content {
       width: 100%;
       height: calc(100% - 47px);
-      overflow-y: scroll;
+      overflow-y: auto;
       overflow-x: hidden; }
 
 .navbar-component .nav-link {
@@ -6381,6 +6484,42 @@ main {
   transition: width 0.5s ease-in-out; }
   .sidenav.closed {
     width: 0px; }
+
+
+.header-component {
+  margin-bottom: -70px;
+  padding-bottom: 100px;
+  border: solid 15px #965500; }
+
+.blackboard-link .card {
+  height: 200px;
+  background-color: #186429;
+  border: solid 10px #5a3300;
+  color: white;
+  transition: background-color 0.3s; }
+  .blackboard-link .card .material-icons {
+    font-size: 60px; }
+  .blackboard-link .card:hover {
+    text-decoration: none;
+    background-color: #39ae54; }
+  .blackboard-link .card.board .card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
+  .blackboard-link .card.board .card-text {
+    height: 6rem;
+    overflow: hidden; }
+
+.add-blackboard .form {
+  background-color: #186429;
+  border: solid 10px #5a3300;
+  color: white; }
+
+.not-found h1 {
+  font-size: 9rem; }
+
+.not-found h5 {
+  font-size: 2.5rem; }
 
 
 /*# sourceMappingURL=style.css.map*/

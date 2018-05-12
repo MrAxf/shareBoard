@@ -1,0 +1,29 @@
+@import '../../theme';
+
+.blackboard-link{
+  .card{
+    height: 200px;
+    background-color: theme-color-level("success", 5);
+    border: solid 10px theme-color-level("brown", 5);
+    color: white;
+    transition: background-color 0.3s;
+    .material-icons{
+      font-size: 60px;
+    }
+    &:hover{
+      text-decoration: none;
+      background-color: theme-color-level("success", -1);
+    }
+    &.board{
+      .card-title{
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .card-text{
+        height: 6rem;
+        overflow: hidden;
+      }
+    }
+  }
+}
