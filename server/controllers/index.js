@@ -12,6 +12,6 @@ module.exports = {
     else res.render("login", {title: "Log in"});
   },
   app(req, res) {
-    res.render("app", {title: "app"});
+    res.render("app", {title: "Blackboard"});
   }
 }

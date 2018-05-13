@@ -6413,12 +6413,14 @@ main {
     overflow: hidden; }
     .layout .inner .main .content {
       width: 100%;
-      height: calc(100% - 47px);
+      height: calc(100% - 50px);
       overflow-y: auto;
       overflow-x: hidden; }
 
 .navbar-component .nav-link {
   padding: 0; }
+  .navbar-component .nav-link .material-icons {
+    line-height: 31px; }
 
 .navbar-toggle-button {
   position: relative;
@@ -6476,6 +6478,12 @@ main {
 
 .navbar-toggle-button-active:hover .bar:nth-child(3) {
   transform: translateY(-8px) rotate(195deg); }
+
+.avatar {
+  border-radius: 100%;
+  color: white;
+  text-align: center;
+  font-weight: bold; }
 
 .sidenav {
   float: left;

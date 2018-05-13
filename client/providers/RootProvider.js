@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { getMyUser } from './UserProvider'
+
 const RootContext = React.createContext()
 
 const reducer = (state, action) => {
@@ -12,8 +14,15 @@ export class RootProvider extends Component {
   
   state = {
     sideBarMustShow: false,
+    user: null,
     dispatch: action => this.setState(state => reducer(state, action))
     
+  }
+
+  componentDidMount(){
+    getMyUser()
+      .then(res => this.setState({user: res.data}))
+      .catch(err => console.log(err))
   }
   
   render() {

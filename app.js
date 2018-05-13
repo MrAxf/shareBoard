@@ -9,6 +9,7 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const indexRouter = require('./server/routes/index');
 const userRouter = require('./server/routes/user');
+const apiRouter = require('./server/routes/api');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
+app.use('/api', apiRouter);
 
 // passport config
 const User = require('./server/models/user');

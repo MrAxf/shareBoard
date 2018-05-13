@@ -8,22 +8,22 @@ module.exports = {
       const user = new User({username});
       await user.setPassword(password);
       await user.save();
-      res.send(JSON.stringify({
+      res.json({
         "error": 0,
         "message": "Register successfull"
-      }));
+      });
     } catch (err) {
-      res.send(JSON.stringify({
+      res.json({
         "error": err.name,
         "message": err.message
-      }));
+      });
     }
   },
   login(req, res){
-    res.send(JSON.stringify({
+    res.json({
       "error": 0,
       "message": "Login succesfull"
-    }));
+    });
   },
   logout(req, res){
     req.logout();
