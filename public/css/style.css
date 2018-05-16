@@ -6523,6 +6523,53 @@ main {
   border: solid 10px #5a3300;
   color: white; }
 
+.multi-select .badge {
+  font-size: .9rem; }
+  .multi-select .badge .close {
+    margin-left: .25rem;
+    color: inherit;
+    font-size: 100%;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer; }
+
+.multi-select .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  width: calc(100% - 30px);
+  max-height: 300px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1; }
+  .multi-select .dropdown-content.show {
+    display: block; }
+  .multi-select .dropdown-content .dropdown-element {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    color: black;
+    cursor: pointer; }
+    .multi-select .dropdown-content .dropdown-element.loading span {
+      font-size: 50px;
+      color: #6c757d;
+      animation: spin 0.7s infinite linear;
+      -webkit-animation: spin2 0.7s infinite linear; }
+    .multi-select .dropdown-content .dropdown-element:hover {
+      background-color: #e9ecef; }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(-360deg); } }
+
+@-webkit-keyframes spin2 {
+  from {
+    -webkit-transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(-360deg); } }
+
 .not-found h1 {
   font-size: 9rem; }
 

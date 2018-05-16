@@ -1,3 +1,5 @@
+const User = require('../../models/user')
+
 module.exports = {
   loggedIn(req, res, next){
     if(req.isAuthenticated()) next();
@@ -5,5 +7,9 @@ module.exports = {
   },
   getLoggedInUser(req, res){
     res.json(req.user);
+  },
+  async getUsersByUserame(req, res){
+    const users = await User.find({"username": { "$regex": `${req.params.username}`, "$options": "i" } })
+    res.json(users);
   }
 }

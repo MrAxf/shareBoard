@@ -499,6 +499,169 @@ exports.default = Layout;
 
 /***/ }),
 
+/***/ "./client/components/multiSelect/MultiSelect.js":
+/*!******************************************************!*\
+  !*** ./client/components/multiSelect/MultiSelect.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _UserProvider = __webpack_require__(/*! ../../providers/UserProvider */ "./client/providers/UserProvider.js");
+
+__webpack_require__(/*! ./multiSelect.scss */ "./client/components/multiSelect/multiSelect.scss");
+
+var _Avatar = __webpack_require__(/*! ../avatar/Avatar */ "./client/components/avatar/Avatar.js");
+
+var _Avatar2 = _interopRequireDefault(_Avatar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MultiSelect = function (_Component) {
+  _inherits(MultiSelect, _Component);
+
+  function MultiSelect() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, MultiSelect);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = MultiSelect.__proto__ || Object.getPrototypeOf(MultiSelect)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      selected: [{ username: "Axford", id: 1 }, { username: "Axford2", id: 2 }],
+      searchedUsers: [],
+      dropdownVisible: false,
+      findingUsers: false
+    }, _this.searchInput = _react2.default.createRef(), _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(MultiSelect, [{
+    key: 'handleRemoveUser',
+    value: function handleRemoveUser(index) {
+      var arr = [].concat(_toConsumableArray(this.state.selected));
+      arr.splice(index, 1);
+      this.setState({ selected: arr });
+    }
+  }, {
+    key: 'handleChange',
+    value: function handleChange(e) {
+      var _this2 = this;
+
+      if (this.searchInput.current.value.length > 3) {
+        this.setState({ dropdownVisible: true, findingUsers: true });
+        (0, _UserProvider.getUsersByUsername)(this.searchInput.current.value).then(function (res) {
+          return _this2.setState({ findingUsers: false, searchedUsers: res.data });
+        }).catch(function (err) {
+          return console.log(err);
+        });
+      } else this.setState({ dropdownVisible: false });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
+
+      var _props = this.props,
+          id = _props.id,
+          placeholder = _props.placeholder,
+          className = _props.className;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'multi-select ' + className },
+        _react2.default.createElement(
+          'div',
+          { className: 'col-12 py-2 px-0' },
+          this.state.selected.map(function (user, index) {
+            return _react2.default.createElement(
+              'span',
+              { className: 'badge badge-pill badge-light mr-1', key: user.id },
+              user.username,
+              _react2.default.createElement(
+                'button',
+                { type: 'button', className: 'close', 'aria-label': 'Close', onClick: function onClick(e) {
+                    return _this3.handleRemoveUser(index);
+                  } },
+                _react2.default.createElement(
+                  'span',
+                  { 'aria-hidden': 'true' },
+                  '\xD7'
+                )
+              )
+            );
+          })
+        ),
+        _react2.default.createElement('input', { type: 'text', className: 'form-control', id: id, placeholder: placeholder, ref: this.searchInput, onChange: this.handleChange.bind(this) }),
+        _react2.default.createElement(
+          'div',
+          { className: 'dropdown-content' + (this.state.dropdownVisible ? ' show' : '') },
+          this.state.findingUsers ? _react2.default.createElement(
+            'div',
+            { className: 'dropdown-element text-center loading' },
+            _react2.default.createElement(
+              'span',
+              { className: 'material-icons' },
+              'replay'
+            )
+          ) : this.state.searchedUsers.map(function (user) {
+            return _react2.default.createElement(
+              'div',
+              { className: 'dropdown-element', key: user._id },
+              _react2.default.createElement(_Avatar2.default, { className: 'float-left m-2', username: user.username, size: 34 }),
+              _react2.default.createElement(
+                'span',
+                null,
+                user.username
+              )
+            );
+          })
+        )
+      );
+    }
+  }]);
+
+  return MultiSelect;
+}(_react.Component);
+
+exports.default = MultiSelect;
+
+/***/ }),
+
+/***/ "./client/components/multiSelect/multiSelect.scss":
+/*!********************************************************!*\
+  !*** ./client/components/multiSelect/multiSelect.scss ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "./client/components/navbar/Navbar.js":
 /*!********************************************!*\
   !*** ./client/components/navbar/Navbar.js ***!
@@ -830,6 +993,10 @@ var _Header = __webpack_require__(/*! ../../components/header/Header */ "./clien
 
 var _Header2 = _interopRequireDefault(_Header);
 
+var _MultiSelect = __webpack_require__(/*! ../../components/multiSelect/MultiSelect */ "./client/components/multiSelect/MultiSelect.js");
+
+var _MultiSelect2 = _interopRequireDefault(_MultiSelect);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -842,9 +1009,17 @@ var AddBlackboard = function (_Page) {
   _inherits(AddBlackboard, _Page);
 
   function AddBlackboard() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, AddBlackboard);
 
-    return _possibleConstructorReturn(this, (AddBlackboard.__proto__ || Object.getPrototypeOf(AddBlackboard)).apply(this, arguments));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AddBlackboard.__proto__ || Object.getPrototypeOf(AddBlackboard)).call.apply(_ref, [this].concat(args))), _this), _this.blackboardTitle = _react2.default.createRef(), _this.blackboardDescription = _react2.default.createRef(), _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AddBlackboard, [{
@@ -883,7 +1058,7 @@ var AddBlackboard = function (_Page) {
               _react2.default.createElement(
                 'div',
                 { className: 'col-sm-10' },
-                _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'title', placeholder: 'Title' })
+                _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'title', placeholder: 'Title', ref: this.blackboardTitle })
               )
             ),
             _react2.default.createElement(
@@ -897,7 +1072,21 @@ var AddBlackboard = function (_Page) {
               _react2.default.createElement(
                 'div',
                 { className: 'col-sm-10' },
-                _react2.default.createElement('textarea', { className: 'form-control', id: 'description', placeholder: 'Description' })
+                _react2.default.createElement('textarea', { className: 'form-control', id: 'description', placeholder: 'Description', ref: this.blackboardDescription })
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group row' },
+              _react2.default.createElement(
+                'label',
+                { htmlFor: 'shared', className: 'col-sm-2 col-form-label' },
+                'Shared with'
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'col-sm-10' },
+                _react2.default.createElement(_MultiSelect2.default, { className: '', id: 'shared', placeholder: 'Type 4 or more characters to find a user...' })
               )
             ),
             _react2.default.createElement(
@@ -1391,7 +1580,7 @@ var RootActions = exports.RootActions = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getMyUser = undefined;
+exports.getUsersByUsername = exports.getMyUser = undefined;
 
 var _AxiosInstance = __webpack_require__(/*! ./AxiosInstance */ "./client/providers/AxiosInstance.js");
 
@@ -1401,6 +1590,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var getMyUser = exports.getMyUser = function getMyUser() {
   return _AxiosInstance2.default.get('user/me');
+};
+
+var getUsersByUsername = exports.getUsersByUsername = function getUsersByUsername(username) {
+  return _AxiosInstance2.default.get('user/' + username);
 };
 
 /***/ }),

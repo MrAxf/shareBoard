@@ -4,8 +4,13 @@ import './addBlackboard.scss'
 
 import Page from '../Page';
 import Header from '../../components/header/Header'
+import MultiSelect from '../../components/multiSelect/MultiSelect'
 
 export default class AddBlackboard extends Page {
+
+  blackboardTitle = React.createRef()
+  blackboardDescription = React.createRef()
+
   render() {
     return (
       <div className="add-blackboard container-fluid">
@@ -19,13 +24,19 @@ export default class AddBlackboard extends Page {
             <div className="form-group row">
               <label htmlFor="title" className="col-sm-2 col-form-label">Title</label>
               <div className="col-sm-10">
-                <input type="text" className="form-control" id="title" placeholder="Title" />
+                <input type="text" className="form-control" id="title" placeholder="Title" ref={this.blackboardTitle} />
               </div>
             </div>
             <div className="form-group row">
               <label htmlFor="description" className="col-sm-2 col-form-label">Description</label>
               <div className="col-sm-10">
-                <textarea className="form-control" id="description" placeholder="Description" />
+                <textarea className="form-control" id="description" placeholder="Description" ref={this.blackboardDescription} />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="shared" className="col-sm-2 col-form-label">Shared with</label>
+              <div className="col-sm-10">
+                <MultiSelect className="" id="shared" placeholder="Type 4 or more characters to find a user..." />
               </div>
             </div>
             <div className="form-group row">
