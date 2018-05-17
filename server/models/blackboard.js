@@ -6,7 +6,7 @@ const Blackboard = new Schema({
   description: String,
   owner: {type: Schema.Types.ObjectId, ref: 'User'},
   sharedWith: [{type: Schema.Types.ObjectId, ref: 'User'}],
-  deletedAt: Date,
+  deletedAt: { type: Date, default: null },
   updatedAt: { type: Date, default: Date.now }
 });
 

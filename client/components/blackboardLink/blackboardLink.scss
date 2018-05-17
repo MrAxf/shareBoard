@@ -15,11 +15,6 @@
       background-color: theme-color-level("success", -1);
     }
     &.board{
-      .card-title{
-        white-space: nowrap; 
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
       .card-text{
         height: 6rem;
         overflow: hidden;

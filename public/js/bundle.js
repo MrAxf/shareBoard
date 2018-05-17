@@ -251,6 +251,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
+var _RootProvider = __webpack_require__(/*! ../../providers/RootProvider */ "./client/providers/RootProvider.js");
+
 __webpack_require__(/*! ./blackboardLink.scss */ "./client/components/blackboardLink/blackboardLink.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -294,6 +296,21 @@ var BlackboardLink = exports.BlackboardLink = function BlackboardLink(_ref) {
         'p',
         { className: 'card-text' },
         blackboard.description
+      ),
+      _react2.default.createElement(
+        _RootProvider.RootConsumer,
+        null,
+        function (ctx) {
+          return ctx.user._id == blackboard.owner ? _react2.default.createElement(
+            'span',
+            { className: 'material-icons text-right' },
+            'person'
+          ) : _react2.default.createElement(
+            'span',
+            { className: 'material-icons text-right' },
+            'share'
+          );
+        }
       )
     )
   );
@@ -552,7 +569,7 @@ var MultiSelect = function (_Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = MultiSelect.__proto__ || Object.getPrototypeOf(MultiSelect)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      selected: [{ username: "Axford", id: 1 }, { username: "Axford2", id: 2 }],
+      selected: [],
       searchedUsers: [],
       dropdownVisible: false,
       findingUsers: false
@@ -565,6 +582,11 @@ var MultiSelect = function (_Component) {
       var arr = [].concat(_toConsumableArray(this.state.selected));
       arr.splice(index, 1);
       this.setState({ selected: arr });
+    }
+  }, {
+    key: 'handleAddUser',
+    value: function handleAddUser(user) {
+      this.setState({ selected: [].concat(_toConsumableArray(this.state.selected), [user]) });
     }
   }, {
     key: 'handleChange',
@@ -581,9 +603,59 @@ var MultiSelect = function (_Component) {
       } else this.setState({ dropdownVisible: false });
     }
   }, {
+    key: 'getDropdownElements',
+    value: function getDropdownElements() {
+      var _this3 = this;
+
+      if (this.state.findingUsers) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'dropdown-element text-center loading' },
+          _react2.default.createElement(
+            'span',
+            { className: 'material-icons' },
+            'replay'
+          )
+        );
+      }
+      var arr = [].concat(_toConsumableArray(this.state.searchedUsers));
+      var filteredArr = arr.filter(function (user) {
+        if (user._id == _this3.props.user._id) return false;
+        for (var i = 0; i < _this3.state.selected.length; i++) {
+          if (_this3.state.selected[i]._id == user._id) return false;
+        }
+        return true;
+      });
+      if (filteredArr.length == 0) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'dropdown-element text-center' },
+          _react2.default.createElement(
+            'span',
+            null,
+            'No users found.'
+          )
+        );
+      }
+      return filteredArr.map(function (user) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'dropdown-element', key: user._id, onClick: function onClick(e) {
+              return _this3.handleAddUser(user);
+            } },
+          _react2.default.createElement(_Avatar2.default, { className: 'float-left m-2', username: user.username, size: 34 }),
+          _react2.default.createElement(
+            'span',
+            null,
+            user.username
+          )
+        );
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _props = this.props,
           id = _props.id,
@@ -599,12 +671,12 @@ var MultiSelect = function (_Component) {
           this.state.selected.map(function (user, index) {
             return _react2.default.createElement(
               'span',
-              { className: 'badge badge-pill badge-light mr-1', key: user.id },
+              { className: 'badge badge-pill badge-light mr-1', key: user._id },
               user.username,
               _react2.default.createElement(
                 'button',
                 { type: 'button', className: 'close', 'aria-label': 'Close', onClick: function onClick(e) {
-                    return _this3.handleRemoveUser(index);
+                    return _this4.handleRemoveUser(index);
                   } },
                 _react2.default.createElement(
                   'span',
@@ -619,28 +691,16 @@ var MultiSelect = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'dropdown-content' + (this.state.dropdownVisible ? ' show' : '') },
-          this.state.findingUsers ? _react2.default.createElement(
-            'div',
-            { className: 'dropdown-element text-center loading' },
-            _react2.default.createElement(
-              'span',
-              { className: 'material-icons' },
-              'replay'
-            )
-          ) : this.state.searchedUsers.map(function (user) {
-            return _react2.default.createElement(
-              'div',
-              { className: 'dropdown-element', key: user._id },
-              _react2.default.createElement(_Avatar2.default, { className: 'float-left m-2', username: user.username, size: 34 }),
-              _react2.default.createElement(
-                'span',
-                null,
-                user.username
-              )
-            );
-          })
+          this.getDropdownElements()
         )
       );
+    }
+  }, {
+    key: 'value',
+    get: function get() {
+      return this.state.selected.map(function (user) {
+        return user._id;
+      });
     }
   }]);
 
@@ -983,6 +1043,10 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _BlackboardProvider = __webpack_require__(/*! ../../providers/BlackboardProvider */ "./client/providers/BlackboardProvider.js");
+
 __webpack_require__(/*! ./addBlackboard.scss */ "./client/pages/addBlackboard/addBlackboard.scss");
 
 var _Page2 = __webpack_require__(/*! ../Page */ "./client/pages/Page.js");
@@ -1019,10 +1083,32 @@ var AddBlackboard = function (_Page) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AddBlackboard.__proto__ || Object.getPrototypeOf(AddBlackboard)).call.apply(_ref, [this].concat(args))), _this), _this.blackboardTitle = _react2.default.createRef(), _this.blackboardDescription = _react2.default.createRef(), _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AddBlackboard.__proto__ || Object.getPrototypeOf(AddBlackboard)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      error: ""
+    }, _this.blackboardTitle = _react2.default.createRef(), _this.blackboardDescription = _react2.default.createRef(), _this.blackboardShared = _react2.default.createRef(), _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(AddBlackboard, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var history = this.props.history;
+
+
+      this.setState({ error: "" });
+
+      var title = this.blackboardTitle.current.value;
+      var description = this.blackboardDescription.current.value;
+      var sharedWith = this.blackboardShared.current.value;
+      (0, _BlackboardProvider.addBlackboard)({ title: title, description: description, sharedWith: sharedWith }).then(function (res) {
+        return history.push('/app');
+      }).catch(function (err) {
+        return _this2.setState({ error: "Title is required" });
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -1046,19 +1132,24 @@ var AddBlackboard = function (_Page) {
           { className: 'container form py-5' },
           _react2.default.createElement(
             'form',
-            null,
+            { onSubmit: this.handleSubmit.bind(this) },
             _react2.default.createElement(
               'div',
               { className: 'form-group row' },
               _react2.default.createElement(
                 'label',
                 { htmlFor: 'title', className: 'col-sm-2 col-form-label' },
-                'Title'
+                'Title(*)'
               ),
               _react2.default.createElement(
                 'div',
                 { className: 'col-sm-10' },
-                _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'title', placeholder: 'Title', ref: this.blackboardTitle })
+                _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'title', placeholder: 'Title', ref: this.blackboardTitle }),
+                _react2.default.createElement(
+                  'p',
+                  { className: 'text-danger font-weight-bold' },
+                  this.state.error
+                )
               )
             ),
             _react2.default.createElement(
@@ -1086,7 +1177,7 @@ var AddBlackboard = function (_Page) {
               _react2.default.createElement(
                 'div',
                 { className: 'col-sm-10' },
-                _react2.default.createElement(_MultiSelect2.default, { className: '', id: 'shared', placeholder: 'Type 4 or more characters to find a user...' })
+                _react2.default.createElement(_MultiSelect2.default, { className: '', user: this.props.rootData.user, ref: this.blackboardShared, id: 'shared', placeholder: 'Type 4 or more characters to find a user...' })
               )
             ),
             _react2.default.createElement(
@@ -1111,7 +1202,7 @@ var AddBlackboard = function (_Page) {
   return AddBlackboard;
 }(_Page3.default);
 
-exports.default = AddBlackboard;
+exports.default = (0, _reactRouterDom.withRouter)(AddBlackboard);
 
 /***/ }),
 
@@ -1334,11 +1425,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
 var _RootProvider = __webpack_require__(/*! ../../providers/RootProvider */ "./client/providers/RootProvider.js");
+
+var _BlackboardProvider = __webpack_require__(/*! ../../providers/BlackboardProvider */ "./client/providers/BlackboardProvider.js");
 
 __webpack_require__(/*! ./project.scss */ "./client/pages/proyects/project.scss");
 
@@ -1374,10 +1469,24 @@ var Projects = function (_Page) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Projects.__proto__ || Object.getPrototypeOf(Projects)).call.apply(_ref, [this].concat(args))), _this), _this.test = [{ id: 1, title: "Blackboard 1", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam quo magnam eos unde tempore praesentium saepe facilis incidunt, iste nam." }, { id: 2, title: "Blackboard 2", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam quo magnam eos unde tempore praesentium saepe facilis incidunt, iste nam." }, { id: 3, title: "Blackboard 3", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam quo magnam eos unde tempore praesentium saepe facilis incidunt, iste nam." }, { id: 4, title: "Blackboard 4", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam quo magnam eos unde tempore praesentium saepe facilis incidunt, iste nam." }, { id: 5, title: "Blackboard 5", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam quo magnam eos unde tempore praesentium saepe facilis incidunt, iste nam." }], _temp), _possibleConstructorReturn(_this, _ret);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Projects.__proto__ || Object.getPrototypeOf(Projects)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      projects: []
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Projects, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _get(Projects.prototype.__proto__ || Object.getPrototypeOf(Projects.prototype), 'componentDidMount', this).call(this);
+      (0, _BlackboardProvider.getMyBlackboards)().then(function (res) {
+        return _this2.setState({ projects: res.data });
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -1408,8 +1517,8 @@ var Projects = function (_Page) {
             'div',
             { className: 'row' },
             _react2.default.createElement(_BlackboardLink.AddBlackboardLink, null),
-            this.test.map(function (item) {
-              return _react2.default.createElement(_BlackboardLink.BlackboardLink, { blackboard: item, key: item.id });
+            this.state.projects.map(function (item) {
+              return _react2.default.createElement(_BlackboardLink.BlackboardLink, { blackboard: item, key: item._id });
             })
           )
         )
@@ -1457,11 +1566,42 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var axiosInstance = _axios2.default.create({
   baseURL: '/api/',
-  timeout: 1000,
+  timeout: 10000,
   withCredentials: true
 });
 
 exports.default = axiosInstance;
+
+/***/ }),
+
+/***/ "./client/providers/BlackboardProvider.js":
+/*!************************************************!*\
+  !*** ./client/providers/BlackboardProvider.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.addBlackboard = exports.getMyBlackboards = undefined;
+
+var _AxiosInstance = __webpack_require__(/*! ./AxiosInstance */ "./client/providers/AxiosInstance.js");
+
+var _AxiosInstance2 = _interopRequireDefault(_AxiosInstance);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var getMyBlackboards = exports.getMyBlackboards = function getMyBlackboards() {
+  return _AxiosInstance2.default.get('/blackboard/me');
+};
+
+var addBlackboard = exports.addBlackboard = function addBlackboard(blackboard) {
+  return _AxiosInstance2.default.post('/blackboard', blackboard);
+};
 
 /***/ }),
 

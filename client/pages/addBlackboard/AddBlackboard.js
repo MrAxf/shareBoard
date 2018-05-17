@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import { addBlackboard } from '../../providers/BlackboardProvider'
 
 import './addBlackboard.scss'
 
@@ -6,10 +8,29 @@ import Page from '../Page';
 import Header from '../../components/header/Header'
 import MultiSelect from '../../components/multiSelect/MultiSelect'
 
-export default class AddBlackboard extends Page {
+class AddBlackboard extends Page {
+
+  state = {
+    error: ""
+  }
 
   blackboardTitle = React.createRef()
   blackboardDescription = React.createRef()
+  blackboardShared = React.createRef()
+
+  handleSubmit(e){
+    e.preventDefault()
+    const { history } = this.props
+
+    this.setState({error: ""})
+
+    const title = this.blackboardTitle.current.value
+    const description = this.blackboardDescription.current.value
+    const sharedWith = this.blackboardShared.current.value
+    addBlackboard({title, description, sharedWith})
+      .then(res => history.push('/app'))
+      .catch(err => this.setState({error: "Title is required"}))
+  }
 
   render() {
     return (
@@ -20,11 +41,12 @@ export default class AddBlackboard extends Page {
           </div>
         </Header>
         <div className="container form py-5">
-          <form>
+          <form onSubmit={this.handleSubmit.bind(this)}>
             <div className="form-group row">
-              <label htmlFor="title" className="col-sm-2 col-form-label">Title</label>
+              <label htmlFor="title" className="col-sm-2 col-form-label">Title(*)</label>
               <div className="col-sm-10">
                 <input type="text" className="form-control" id="title" placeholder="Title" ref={this.blackboardTitle} />
+                <p className="text-danger font-weight-bold">{this.state.error}</p>
               </div>
             </div>
             <div className="form-group row">
@@ -36,7 +58,7 @@ export default class AddBlackboard extends Page {
             <div className="form-group row">
               <label htmlFor="shared" className="col-sm-2 col-form-label">Shared with</label>
               <div className="col-sm-10">
-                <MultiSelect className="" id="shared" placeholder="Type 4 or more characters to find a user..." />
+                <MultiSelect className="" user={this.props.rootData.user} ref={this.blackboardShared} id="shared" placeholder="Type 4 or more characters to find a user..." />
               </div>
             </div>
             <div className="form-group row">
@@ -50,3 +72,5 @@ export default class AddBlackboard extends Page {
     )
   }
 }
+
+export default withRouter(AddBlackboard)

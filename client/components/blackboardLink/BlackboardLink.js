@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom";
+import { RootConsumer } from '../../providers/RootProvider'
 
 import './blackboardLink.scss'
 
@@ -20,6 +21,9 @@ export const BlackboardLink = ({blackboard}) => {
       <Link className="card board p-2" to={`/app/blackboar/${blackboard.id}`}>
         <h5 className="card-title">{blackboard.title}</h5>
         <p className="card-text">{blackboard.description}</p>
+        <RootConsumer>
+          {ctx => ctx.user._id == blackboard.owner ? <span className="material-icons text-right">person</span> : <span className="material-icons text-right">share</span>}
+        </RootConsumer>
       </Link>
     </div>
   )

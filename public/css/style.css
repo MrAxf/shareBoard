@@ -6510,10 +6510,6 @@ main {
   .blackboard-link .card:hover {
     text-decoration: none;
     background-color: #39ae54; }
-  .blackboard-link .card.board .card-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; }
   .blackboard-link .card.board .card-text {
     height: 6rem;
     overflow: hidden; }
