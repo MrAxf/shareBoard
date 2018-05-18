@@ -154,7 +154,7 @@ var App = function (_Component) {
                 _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/app/addblackboard', render: function render() {
                     return _react2.default.createElement(_AddBlackboard2.default, { rootData: context, sidenavEnable: _RootProvider.RootActions.DISABLE_SIDEBAR });
                   } }),
-                _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/app/blackboard', render: function render() {
+                _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/app/blackboard/:id', render: function render() {
                     return _react2.default.createElement(_Blackboard2.default, { rootData: context, sidenavEnable: _RootProvider.RootActions.ENABLE_SIDEBAR });
                   } }),
                 _react2.default.createElement(_reactRouterDom.Route, { render: function render() {
@@ -286,7 +286,7 @@ var BlackboardLink = exports.BlackboardLink = function BlackboardLink(_ref) {
     { className: 'blackboard-link col col-12 col-sm-6 col-md-4 col-lg-3 p-2' },
     _react2.default.createElement(
       _reactRouterDom.Link,
-      { className: 'card board p-2', to: '/app/blackboar/' + blackboard.id },
+      { className: 'card board p-2', to: '/app/blackboard/' + blackboard._id },
       _react2.default.createElement(
         'h5',
         { className: 'card-title' },
@@ -301,7 +301,7 @@ var BlackboardLink = exports.BlackboardLink = function BlackboardLink(_ref) {
         _RootProvider.RootConsumer,
         null,
         function (ctx) {
-          return ctx.user._id == blackboard.owner ? _react2.default.createElement(
+          return ctx.user && ctx.user._id == blackboard.owner ? _react2.default.createElement(
             'span',
             { className: 'material-icons text-right' },
             'person'
@@ -1233,9 +1233,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(/*! ./blackboard.scss */ "./client/pages/blackboard/blackboard.scss");
 
 var _Page2 = __webpack_require__(/*! ../Page */ "./client/pages/Page.js");
 
@@ -1253,21 +1257,90 @@ var Blackboard = function (_Page) {
   _inherits(Blackboard, _Page);
 
   function Blackboard() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, Blackboard);
 
-    return _possibleConstructorReturn(this, (Blackboard.__proto__ || Object.getPrototypeOf(Blackboard)).apply(this, arguments));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Blackboard.__proto__ || Object.getPrototypeOf(Blackboard)).call.apply(_ref, [this].concat(args))), _this), _this.canvas = _react2.default.createRef(), _this.drawing = false, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(Blackboard, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _get(Blackboard.prototype.__proto__ || Object.getPrototypeOf(Blackboard.prototype), 'componentDidMount', this).call(this);
+      this.ctx = this.canvas.current.getContext("2d");
+      document.addEventListener("mousedown", this.handleMouseDown.bind(this));
+      document.addEventListener("mouseup", this.handleMouseUp.bind(this));
+      document.addEventListener('mousemove', this.handleMouseMove.bind(this));
+    }
+  }, {
+    key: 'handleMouseDown',
+    value: function handleMouseDown(e) {
+      this.prevCoords = this.getMousePos(e);
+      this.drawing = true;
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, {
+    key: 'handleMouseUp',
+    value: function handleMouseUp(e) {
+      this.drawing = false;
+      e.stopPropagation();
+    }
+  }, {
+    key: 'handleMouseMove',
+    value: function handleMouseMove(e) {
+      if (this.drawing) this.draw(e);
+    }
+  }, {
+    key: 'draw',
+    value: function draw(e) {
+      var _getMousePos = this.getMousePos(e),
+          x = _getMousePos.x,
+          y = _getMousePos.y;
+
+      this.ctx.strokeStyle = "white";
+      this.ctx.lineWidth = 3;
+      this.ctx.beginPath();
+      this.ctx.moveTo(Math.round(this.prevCoords.x), Math.round(this.prevCoords.y));
+      this.ctx.lineTo(Math.round(x), Math.round(y));
+      this.ctx.closePath();
+      this.ctx.stroke();
+      this.prevCoords = { x: x, y: y };
+    }
+  }, {
+    key: 'getMousePos',
+    value: function getMousePos(e) {
+      var rect = this.canvas.current.getBoundingClientRect();
+      return {
+        x: (e.clientX - rect.left) / rect.width * 1280,
+        y: (e.clientY - rect.top) / rect.height * 720
+      };
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'blackboard container-fluid h-100' },
         _react2.default.createElement(
-          'h1',
-          null,
-          'Blackboard!'
+          'div',
+          { className: 'row h-100 align-items-center justify-content-md-center' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col py-5 col-sm-8' },
+            _react2.default.createElement(
+              'div',
+              { className: 'blackboard-container' },
+              _react2.default.createElement('canvas', { width: '1280px', height: '720px', id: 'blackboard-canvas', ref: this.canvas })
+            )
+          )
         )
       );
     }
@@ -1277,6 +1350,17 @@ var Blackboard = function (_Page) {
 }(_Page3.default);
 
 exports.default = Blackboard;
+
+/***/ }),
+
+/***/ "./client/pages/blackboard/blackboard.scss":
+/*!*************************************************!*\
+  !*** ./client/pages/blackboard/blackboard.scss ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 

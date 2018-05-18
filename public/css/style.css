@@ -6566,6 +6566,19 @@ main {
   to {
     -webkit-transform: rotate(-360deg); } }
 
+.blackboard .blackboard-container {
+  position: relative;
+  background-color: #28a745;
+  border: solid 10px #965500;
+  width: 100%;
+  padding-top: 56.25%; }
+  .blackboard .blackboard-container #blackboard-canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; }
+
 .not-found h1 {
   font-size: 9rem; }
 
