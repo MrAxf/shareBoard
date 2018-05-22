@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { subscribe, emitDraw } from '../../providers/SocketProvider'
 
 import './blackboard.scss'
 
@@ -11,10 +12,17 @@ class Blackboard extends Page {
 
   componentDidMount() {
     super.componentDidMount()
-    this.ctx = this.canvas.current.getContext("2d");
+
+    const { id } = this.props
+
+    this.ctx = this.canvas.current.getContext("2d")
     document.addEventListener("mousedown", this.handleMouseDown.bind(this))
     document.addEventListener("mouseup", this.handleMouseUp.bind(this))
     document.addEventListener('mousemove', this.handleMouseMove.bind(this))
+    subscribe(id , (data => {
+      const { oX, oY, dX, dY } = JSON.parse(data)
+      this.draw(oX, oY, dX, dY)
+    }).bind(this))
   }
 
   handleMouseDown(e) {
@@ -30,19 +38,24 @@ class Blackboard extends Page {
   }
 
   handleMouseMove(e){
-    if (this.drawing) this.draw(e)
+    const { id } = this.props
+    if (this.drawing){
+      const { x, y } = this.getMousePos(e)
+      //this.draw(this.prevCoords.x, this.prevCoords.y, x, y)
+      emitDraw(id, this.prevCoords.x, this.prevCoords.y, x, y)
+      this.prevCoords = { x, y }
+    }
   }
 
-  draw(e) {
-    const { x, y } = this.getMousePos(e)
+  draw(oX, oY, dX, dY) {
     this.ctx.strokeStyle="white";
     this.ctx.lineWidth=3;
     this.ctx.beginPath();
-    this.ctx.moveTo(Math.round(this.prevCoords.x), Math.round(this.prevCoords.y))
-    this.ctx.lineTo(Math.round(x), Math.round(y))
+    this.ctx.moveTo(Math.round(oX), Math.round(oY))
+    this.ctx.lineTo(Math.round(dX), Math.round(dY))
     this.ctx.closePath();
     this.ctx.stroke();
-    this.prevCoords = { x, y }
+    
   }
 
   getMousePos(e) {

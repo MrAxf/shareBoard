@@ -16,7 +16,6 @@ export class RootProvider extends Component {
     sideBarMustShow: false,
     user: null,
     dispatch: action => this.setState(state => reducer(state, action))
-    
   }
 
   componentDidMount(){

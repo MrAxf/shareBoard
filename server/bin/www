@@ -92,6 +92,13 @@ mongoose.connect(mongoURI)
 const server = http.createServer(app);
 
 /**
+ * Attach WebSockets Server
+ */
+
+const io = require('socket.io').listen(server);
+require('../sockets/index')(io); 
+
+/**
  * Listen on provided port, on all network interfaces.
  */
 

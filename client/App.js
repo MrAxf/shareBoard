@@ -20,7 +20,7 @@ class App extends Component {
                 <Switch>
                   <Route exact path='/app' render={() => <Projects rootData={context} sidenavEnable={RootActions.DISABLE_SIDEBAR} />} />
                   <Route exact path='/app/addblackboard' render={() => <AddBlackboard rootData={context} sidenavEnable={RootActions.DISABLE_SIDEBAR} />} />
-                  <Route exact path='/app/blackboard/:id' render={() => <Blackboard rootData={context} sidenavEnable={RootActions.ENABLE_SIDEBAR} />} />
+                  <Route exact path='/app/blackboard/:id' render={props => <Blackboard rootData={context} sidenavEnable={RootActions.ENABLE_SIDEBAR} id={props.match.params.id} />} />
                   <Route render={() => <NotFound rootData={context} sidenavEnable={RootActions.DISABLE_SIDEBAR} />} />
                 </Switch>
               )
