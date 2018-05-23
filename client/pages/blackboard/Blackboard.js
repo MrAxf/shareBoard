@@ -19,10 +19,11 @@ class Blackboard extends Page {
     document.addEventListener("mousedown", this.handleMouseDown.bind(this))
     document.addEventListener("mouseup", this.handleMouseUp.bind(this))
     document.addEventListener('mousemove', this.handleMouseMove.bind(this))
-    subscribe(id , (data => {
-      const { oX, oY, dX, dY } = JSON.parse(data)
-      this.draw(oX, oY, dX, dY)
-    }).bind(this))
+    subscribe(id)
+      .onDraw((data => {
+        const { oX, oY, dX, dY } = JSON.parse(data)
+        this.draw(oX, oY, dX, dY)
+      }).bind(this))
   }
 
   handleMouseDown(e) {

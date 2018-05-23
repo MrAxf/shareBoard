@@ -1286,7 +1286,7 @@ var Blackboard = function (_Page) {
       document.addEventListener("mousedown", this.handleMouseDown.bind(this));
       document.addEventListener("mouseup", this.handleMouseUp.bind(this));
       document.addEventListener('mousemove', this.handleMouseMove.bind(this));
-      (0, _SocketProvider.subscribe)(id, function (data) {
+      (0, _SocketProvider.subscribe)(id).onDraw(function (data) {
         var _JSON$parse = JSON.parse(data),
             oX = _JSON$parse.oX,
             oY = _JSON$parse.oY,
@@ -1836,11 +1836,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var socket = (0, _socket2.default)();
 
-var subscribe = exports.subscribe = function subscribe(id, onDraw) {
-  socket.on('connect', function () {
-    return socket.emit('join', id);
-  });
-  socket.on('draw', onDraw);
+var callbacks = {
+  onDraw: function onDraw(cb) {
+    socket.on('draw', cb);
+    return this;
+  }
+};
+
+var subscribe = exports.subscribe = function subscribe(id) {
+  socket.emit('join', id);
+  return callbacks;
 };
 
 var emitDraw = exports.emitDraw = function emitDraw(id, oX, oY, dX, dY) {
@@ -8052,7 +8057,7 @@ var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
 if (typeof window === 'undefined') {
   try {
-    NodeWebSocket = __webpack_require__(/*! ws */ 14);
+    NodeWebSocket = __webpack_require__(/*! ws */ 12);
   } catch (e) { }
 }
 
@@ -37711,7 +37716,7 @@ module.exports = yeast;
 
 /***/ }),
 
-/***/ 14:
+/***/ 12:
 /*!********************!*\
   !*** ws (ignored) ***!
   \********************/
