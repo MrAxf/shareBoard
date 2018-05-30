@@ -1258,18 +1258,19 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Blackboard = function (_Page) {
   _inherits(Blackboard, _Page);
 
-  function Blackboard() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
+  function Blackboard(props) {
     _classCallCheck(this, Blackboard);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+    var _this = _possibleConstructorReturn(this, (Blackboard.__proto__ || Object.getPrototypeOf(Blackboard)).call(this, props));
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Blackboard.__proto__ || Object.getPrototypeOf(Blackboard)).call.apply(_ref, [this].concat(args))), _this), _this.canvas = _react2.default.createRef(), _this.drawing = false, _temp), _possibleConstructorReturn(_this, _ret);
+    _this.canvas = _react2.default.createRef();
+    _this.drawing = false;
+
+
+    document.addEventListener("mousedown", _this.handleMouseDown.bind(_this));
+    document.addEventListener("mouseup", _this.handleMouseUp.bind(_this));
+    document.addEventListener('mousemove', _this.handleMouseMove.bind(_this));
+    return _this;
   }
 
   _createClass(Blackboard, [{
@@ -1283,9 +1284,7 @@ var Blackboard = function (_Page) {
 
 
       this.ctx = this.canvas.current.getContext("2d");
-      document.addEventListener("mousedown", this.handleMouseDown.bind(this));
-      document.addEventListener("mouseup", this.handleMouseUp.bind(this));
-      document.addEventListener('mousemove', this.handleMouseMove.bind(this));
+
       (0, _SocketProvider.subscribe)(id).onDraw(function (data) {
         var _JSON$parse = JSON.parse(data),
             oX = _JSON$parse.oX,
@@ -1354,7 +1353,7 @@ var Blackboard = function (_Page) {
         { className: 'blackboard container-fluid h-100' },
         _react2.default.createElement(
           'div',
-          { className: 'row h-100 align-items-center justify-content-md-center' },
+          { className: 'row h-100 align-items-center justify-content-center' },
           _react2.default.createElement(
             'div',
             { className: 'col py-5 col-sm-8' },
@@ -8057,7 +8056,7 @@ var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
 if (typeof window === 'undefined') {
   try {
-    NodeWebSocket = __webpack_require__(/*! ws */ 12);
+    NodeWebSocket = __webpack_require__(/*! ws */ 13);
   } catch (e) { }
 }
 
@@ -37716,7 +37715,7 @@ module.exports = yeast;
 
 /***/ }),
 
-/***/ 12:
+/***/ 13:
 /*!********************!*\
   !*** ws (ignored) ***!
   \********************/

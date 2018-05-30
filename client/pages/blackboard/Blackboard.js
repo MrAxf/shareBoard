@@ -10,15 +10,21 @@ class Blackboard extends Page {
   canvas = React.createRef()
   drawing = false
 
+  constructor(props){
+    super(props)
+
+    document.addEventListener("mousedown", this.handleMouseDown.bind(this))
+    document.addEventListener("mouseup", this.handleMouseUp.bind(this))
+    document.addEventListener('mousemove', this.handleMouseMove.bind(this))
+  }
+
   componentDidMount() {
     super.componentDidMount()
 
     const { id } = this.props
 
     this.ctx = this.canvas.current.getContext("2d")
-    document.addEventListener("mousedown", this.handleMouseDown.bind(this))
-    document.addEventListener("mouseup", this.handleMouseUp.bind(this))
-    document.addEventListener('mousemove', this.handleMouseMove.bind(this))
+    
     subscribe(id)
       .onDraw((data => {
         const { oX, oY, dX, dY } = JSON.parse(data)
@@ -70,7 +76,7 @@ class Blackboard extends Page {
   render() {
     return (
       <div className="blackboard container-fluid h-100">
-        <div className="row h-100 align-items-center justify-content-md-center">
+        <div className="row h-100 align-items-center justify-content-center">
           <div className="col py-5 col-sm-8">
             <div className="blackboard-container">
               <canvas width="1280px" height="720px" id="blackboard-canvas" ref={this.canvas}>
