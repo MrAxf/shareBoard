@@ -6514,6 +6514,11 @@ main {
     height: 6rem;
     overflow: hidden; }
 
+.blackboard-link .edit-button {
+  position: absolute;
+  bottom: 30px;
+  left: 30px; }
+
 .add-blackboard .form {
   background-color: #186429;
   border: solid 10px #5a3300;
@@ -6565,6 +6570,11 @@ main {
     -webkit-transform: rotate(0deg); }
   to {
     -webkit-transform: rotate(-360deg); } }
+
+.add-blackboard .form {
+  background-color: #186429;
+  border: solid 10px #5a3300;
+  color: white; }
 
 .blackboard .blackboard-container {
   position: relative;

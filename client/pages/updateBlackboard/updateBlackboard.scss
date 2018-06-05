@@ -1,0 +1,9 @@
+@import '../../theme';
+
+.add-blackboard{
+  .form{
+    background-color: theme-color-level("success", 5);
+    border: solid 10px theme-color-level("brown", 5);
+    color: white;
+  }
+}

@@ -1,16 +1,20 @@
 module.exports = io => {
-  io.on('connection', socket =>{
+  io.on('connection', user =>{
 
-    socket.on('join', id => {
-      socket.join(id);
+    user.on('join', id => {
+      user.join(id);
     });
 
-    socket.on('draw', (data) => {
+    user.on('leave', id => {
+      user.leave(id);
+    });
+
+    user.on('draw', (data) => {
       const { id, payload } = JSON.parse(data)
       io.to(id).emit('draw', JSON.stringify(payload));
     });
 
-    socket.on('disconect', () => {
+    user.on('disconect', () => {
       console.log('Disconected');
     });
 

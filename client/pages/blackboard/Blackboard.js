@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { subscribe, emitDraw } from '../../providers/SocketProvider'
+import { subscribe, unsubscribe, emitDraw } from '../../providers/SocketProvider'
 
 import './blackboard.scss'
 
@@ -12,10 +12,10 @@ class Blackboard extends Page {
 
   constructor(props){
     super(props)
-
-    document.addEventListener("mousedown", this.handleMouseDown.bind(this))
-    document.addEventListener("mouseup", this.handleMouseUp.bind(this))
-    document.addEventListener('mousemove', this.handleMouseMove.bind(this))
+    
+    this.handleMouseDown = this.handleMouseDown.bind(this)
+    this.handleMouseUp = this.handleMouseUp.bind(this)
+    this.handleMouseMove = this.handleMouseMove.bind(this)
   }
 
   componentDidMount() {
@@ -24,12 +24,26 @@ class Blackboard extends Page {
     const { id } = this.props
 
     this.ctx = this.canvas.current.getContext("2d")
+
+    document.addEventListener("mousedown", this.handleMouseDown)
+    document.addEventListener("mouseup", this.handleMouseUp)
+    document.addEventListener('mousemove', this.handleMouseMove)
     
     subscribe(id)
       .onDraw((data => {
         const { oX, oY, dX, dY } = JSON.parse(data)
         this.draw(oX, oY, dX, dY)
       }).bind(this))
+  }
+
+  componentWillUnmount(){
+    const { id } = this.props
+
+    unsubscribe(id)
+
+    document.removeEventListener("mousedown", this.handleMouseDown)
+    document.removeEventListener("mouseup", this.handleMouseUp)
+    document.removeEventListener('mousemove', this.handleMouseMove)
   }
 
   handleMouseDown(e) {
@@ -66,7 +80,7 @@ class Blackboard extends Page {
   }
 
   getMousePos(e) {
-    const rect = this.canvas.current.getBoundingClientRect();
+    const rect = this.canvas.current.getBoundingClientRect()
     return {
       x: ((e.clientX - rect.left) / rect.width) * 1280,
       y: ((e.clientY - rect.top) / rect.height) * 720

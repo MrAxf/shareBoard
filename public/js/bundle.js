@@ -107,6 +107,10 @@ var _AddBlackboard = __webpack_require__(/*! ./pages/addBlackboard/AddBlackboard
 
 var _AddBlackboard2 = _interopRequireDefault(_AddBlackboard);
 
+var _UpdateBlackboard = __webpack_require__(/*! ./pages/updateBlackboard/UpdateBlackboard */ "./client/pages/updateBlackboard/UpdateBlackboard.js");
+
+var _UpdateBlackboard2 = _interopRequireDefault(_UpdateBlackboard);
+
 var _Blackboard = __webpack_require__(/*! ./pages/blackboard/Blackboard */ "./client/pages/blackboard/Blackboard.js");
 
 var _Blackboard2 = _interopRequireDefault(_Blackboard);
@@ -153,6 +157,9 @@ var App = function (_Component) {
                   } }),
                 _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/app/addblackboard', render: function render() {
                     return _react2.default.createElement(_AddBlackboard2.default, { rootData: context, sidenavEnable: _RootProvider.RootActions.DISABLE_SIDEBAR });
+                  } }),
+                _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/app/updateblackboard/:id', render: function render(props) {
+                    return _react2.default.createElement(_UpdateBlackboard2.default, { rootData: context, sidenavEnable: _RootProvider.RootActions.DISABLE_SIDEBAR, id: props.match.params.id });
                   } }),
                 _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/app/blackboard/:id', render: function render(props) {
                     return _react2.default.createElement(_Blackboard2.default, { rootData: context, sidenavEnable: _RootProvider.RootActions.ENABLE_SIDEBAR, id: props.match.params.id });
@@ -227,6 +234,216 @@ exports.default = function (_ref) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./client/components/blackboardForm/BlackboardForm.js":
+/*!************************************************************!*\
+  !*** ./client/components/blackboardForm/BlackboardForm.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _BlackboardProvider = __webpack_require__(/*! ../../providers/BlackboardProvider */ "./client/providers/BlackboardProvider.js");
+
+var _MultiSelect = __webpack_require__(/*! ../multiSelect/MultiSelect */ "./client/components/multiSelect/MultiSelect.js");
+
+var _MultiSelect2 = _interopRequireDefault(_MultiSelect);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var BlackboardForm = function (_Component) {
+  _inherits(BlackboardForm, _Component);
+
+  function BlackboardForm() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, BlackboardForm);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = BlackboardForm.__proto__ || Object.getPrototypeOf(BlackboardForm)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      error: ""
+    }, _this.blackboardTitle = _react2.default.createRef(), _this.blackboardDescription = _react2.default.createRef(), _this.blackboardShared = _react2.default.createRef(), _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(BlackboardForm, [{
+    key: 'addBlackboard',
+    value: function addBlackboard(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var history = this.props.history;
+
+
+      this.setState({ error: "" });
+
+      var title = this.blackboardTitle.current.value;
+      var description = this.blackboardDescription.current.value;
+      var sharedWith = this.blackboardShared.current.value;
+      (0, _BlackboardProvider.addBlackboard)({ title: title, description: description, sharedWith: sharedWith }).then(function (res) {
+        return history.push('/app');
+      }).catch(function (err) {
+        return _this2.setState({ error: "Title is required" });
+      });
+    }
+  }, {
+    key: 'updateBlackboard',
+    value: function updateBlackboard(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      var _props = this.props,
+          history = _props.history,
+          blackboard = _props.blackboard;
+      var _id = blackboard._id;
+
+
+      this.setState({ error: "" });
+
+      var title = this.blackboardTitle.current.value;
+      var description = this.blackboardDescription.current.value;
+      var sharedWith = this.blackboardShared.current.value;
+      (0, _BlackboardProvider.updateBlackboard)(_id, { title: title, description: description, sharedWith: sharedWith }).then(function (res) {
+        return history.push('/app');
+      }).catch(function (err) {
+        return _this3.setState({ error: "Title is required" });
+      });
+    }
+  }, {
+    key: 'deleteBlackboard',
+    value: function deleteBlackboard(e) {
+      var _this4 = this;
+
+      e.preventDefault();
+      var _props2 = this.props,
+          history = _props2.history,
+          blackboard = _props2.blackboard;
+      var _id = blackboard._id;
+
+
+      this.setState({ error: "" });
+
+      (0, _BlackboardProvider.deleteBlackboard)(_id).then(function (res) {
+        return history.push('/app');
+      }).catch(function (err) {
+        return _this4.setState({ error: "Error on delete" });
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var blackboard = this.props.blackboard;
+      var _id = blackboard._id,
+          title = blackboard.title,
+          description = blackboard.description,
+          sharedWith = blackboard.sharedWith;
+
+      return _react2.default.createElement(
+        'form',
+        { onSubmit: _id ? this.updateBlackboard.bind(this) : this.addBlackboard.bind(this) },
+        _react2.default.createElement(
+          'div',
+          { className: 'form-group row' },
+          _react2.default.createElement(
+            'label',
+            { htmlFor: 'title', className: 'col-sm-2 col-form-label' },
+            'Title(*)'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-10' },
+            _react2.default.createElement('input', { type: 'text', className: 'form-control', defaultValue: title, id: 'title', placeholder: 'Title', ref: this.blackboardTitle }),
+            _react2.default.createElement(
+              'p',
+              { className: 'text-danger font-weight-bold' },
+              this.state.error
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'form-group row' },
+          _react2.default.createElement(
+            'label',
+            { htmlFor: 'description', className: 'col-sm-2 col-form-label' },
+            'Description'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-10' },
+            _react2.default.createElement('textarea', { className: 'form-control', defaultValue: description, id: 'description', placeholder: 'Description', ref: this.blackboardDescription })
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'form-group row' },
+          _react2.default.createElement(
+            'label',
+            { htmlFor: 'shared', className: 'col-sm-2 col-form-label' },
+            'Shared with'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-10' },
+            _react2.default.createElement(_MultiSelect2.default, { className: '', defaultValue: sharedWith, user: this.props.user, ref: this.blackboardShared, id: 'shared', placeholder: 'Type 4 or more characters to find a user...' })
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'form-group row' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-10' },
+            _react2.default.createElement(
+              'button',
+              { type: 'submit', className: 'btn btn-primary' },
+              _id ? 'Update' : 'Add',
+              ' blackboard'
+            ),
+            _id ? _react2.default.createElement(
+              'button',
+              { onClick: this.deleteBlackboard.bind(this), className: 'btn btn-danger ml-3' },
+              'Delete blackboard'
+            ) : ''
+          )
+        )
+      );
+    }
+  }]);
+
+  return BlackboardForm;
+}(_react.Component);
+
+BlackboardForm.defaultProps = {
+  blackboard: {
+    _id: null
+  }
+};
+exports.default = BlackboardForm;
 
 /***/ }),
 
@@ -312,6 +529,17 @@ var BlackboardLink = exports.BlackboardLink = function BlackboardLink(_ref) {
           );
         }
       )
+    ),
+    _react2.default.createElement(
+      _RootProvider.RootConsumer,
+      null,
+      function (ctx) {
+        return ctx.user && ctx.user._id == blackboard.owner ? _react2.default.createElement(
+          _reactRouterDom.Link,
+          { className: 'btn btn-primary text-white edit-button', to: '/app/updateblackboard/' + blackboard._id },
+          'Edit'
+        ) : '';
+      }
     )
   );
 };
@@ -569,7 +797,7 @@ var MultiSelect = function (_Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = MultiSelect.__proto__ || Object.getPrototypeOf(MultiSelect)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      selected: [],
+      selected: _this.props.defaultValue ? _this.props.defaultValue : [],
       searchedUsers: [],
       dropdownVisible: false,
       findingUsers: false
@@ -1045,8 +1273,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
-var _BlackboardProvider = __webpack_require__(/*! ../../providers/BlackboardProvider */ "./client/providers/BlackboardProvider.js");
-
 __webpack_require__(/*! ./addBlackboard.scss */ "./client/pages/addBlackboard/addBlackboard.scss");
 
 var _Page2 = __webpack_require__(/*! ../Page */ "./client/pages/Page.js");
@@ -1057,9 +1283,9 @@ var _Header = __webpack_require__(/*! ../../components/header/Header */ "./clien
 
 var _Header2 = _interopRequireDefault(_Header);
 
-var _MultiSelect = __webpack_require__(/*! ../../components/multiSelect/MultiSelect */ "./client/components/multiSelect/MultiSelect.js");
+var _BlackboardForm = __webpack_require__(/*! ../../components/blackboardForm/BlackboardForm */ "./client/components/blackboardForm/BlackboardForm.js");
 
-var _MultiSelect2 = _interopRequireDefault(_MultiSelect);
+var _BlackboardForm2 = _interopRequireDefault(_BlackboardForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1073,42 +1299,12 @@ var AddBlackboard = function (_Page) {
   _inherits(AddBlackboard, _Page);
 
   function AddBlackboard() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
     _classCallCheck(this, AddBlackboard);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AddBlackboard.__proto__ || Object.getPrototypeOf(AddBlackboard)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      error: ""
-    }, _this.blackboardTitle = _react2.default.createRef(), _this.blackboardDescription = _react2.default.createRef(), _this.blackboardShared = _react2.default.createRef(), _temp), _possibleConstructorReturn(_this, _ret);
+    return _possibleConstructorReturn(this, (AddBlackboard.__proto__ || Object.getPrototypeOf(AddBlackboard)).apply(this, arguments));
   }
 
   _createClass(AddBlackboard, [{
-    key: 'handleSubmit',
-    value: function handleSubmit(e) {
-      var _this2 = this;
-
-      e.preventDefault();
-      var history = this.props.history;
-
-
-      this.setState({ error: "" });
-
-      var title = this.blackboardTitle.current.value;
-      var description = this.blackboardDescription.current.value;
-      var sharedWith = this.blackboardShared.current.value;
-      (0, _BlackboardProvider.addBlackboard)({ title: title, description: description, sharedWith: sharedWith }).then(function (res) {
-        return history.push('/app');
-      }).catch(function (err) {
-        return _this2.setState({ error: "Title is required" });
-      });
-    }
-  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -1130,70 +1326,7 @@ var AddBlackboard = function (_Page) {
         _react2.default.createElement(
           'div',
           { className: 'container form py-5' },
-          _react2.default.createElement(
-            'form',
-            { onSubmit: this.handleSubmit.bind(this) },
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group row' },
-              _react2.default.createElement(
-                'label',
-                { htmlFor: 'title', className: 'col-sm-2 col-form-label' },
-                'Title(*)'
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'col-sm-10' },
-                _react2.default.createElement('input', { type: 'text', className: 'form-control', id: 'title', placeholder: 'Title', ref: this.blackboardTitle }),
-                _react2.default.createElement(
-                  'p',
-                  { className: 'text-danger font-weight-bold' },
-                  this.state.error
-                )
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group row' },
-              _react2.default.createElement(
-                'label',
-                { htmlFor: 'description', className: 'col-sm-2 col-form-label' },
-                'Description'
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'col-sm-10' },
-                _react2.default.createElement('textarea', { className: 'form-control', id: 'description', placeholder: 'Description', ref: this.blackboardDescription })
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group row' },
-              _react2.default.createElement(
-                'label',
-                { htmlFor: 'shared', className: 'col-sm-2 col-form-label' },
-                'Shared with'
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'col-sm-10' },
-                _react2.default.createElement(_MultiSelect2.default, { className: '', user: this.props.rootData.user, ref: this.blackboardShared, id: 'shared', placeholder: 'Type 4 or more characters to find a user...' })
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group row' },
-              _react2.default.createElement(
-                'div',
-                { className: 'col-sm-10' },
-                _react2.default.createElement(
-                  'button',
-                  { type: 'submit', className: 'btn btn-primary' },
-                  'Add blackboard'
-                )
-              )
-            )
-          )
+          _react2.default.createElement(_BlackboardForm2.default, { history: this.props.history, user: this.props.rootData.user })
         )
       );
     }
@@ -1267,9 +1400,9 @@ var Blackboard = function (_Page) {
     _this.drawing = false;
 
 
-    document.addEventListener("mousedown", _this.handleMouseDown.bind(_this));
-    document.addEventListener("mouseup", _this.handleMouseUp.bind(_this));
-    document.addEventListener('mousemove', _this.handleMouseMove.bind(_this));
+    _this.handleMouseDown = _this.handleMouseDown.bind(_this);
+    _this.handleMouseUp = _this.handleMouseUp.bind(_this);
+    _this.handleMouseMove = _this.handleMouseMove.bind(_this);
     return _this;
   }
 
@@ -1285,6 +1418,10 @@ var Blackboard = function (_Page) {
 
       this.ctx = this.canvas.current.getContext("2d");
 
+      document.addEventListener("mousedown", this.handleMouseDown);
+      document.addEventListener("mouseup", this.handleMouseUp);
+      document.addEventListener('mousemove', this.handleMouseMove);
+
       (0, _SocketProvider.subscribe)(id).onDraw(function (data) {
         var _JSON$parse = JSON.parse(data),
             oX = _JSON$parse.oX,
@@ -1294,6 +1431,18 @@ var Blackboard = function (_Page) {
 
         _this2.draw(oX, oY, dX, dY);
       }.bind(this));
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      var id = this.props.id;
+
+
+      (0, _SocketProvider.unsubscribe)(id);
+
+      document.removeEventListener("mousedown", this.handleMouseDown);
+      document.removeEventListener("mouseup", this.handleMouseUp);
+      document.removeEventListener('mousemove', this.handleMouseMove);
     }
   }, {
     key: 'handleMouseDown',
@@ -1650,6 +1799,131 @@ exports.default = Projects;
 
 /***/ }),
 
+/***/ "./client/pages/updateBlackboard/UpdateBlackboard.js":
+/*!***********************************************************!*\
+  !*** ./client/pages/updateBlackboard/UpdateBlackboard.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _BlackboardProvider = __webpack_require__(/*! ../../providers/BlackboardProvider */ "./client/providers/BlackboardProvider.js");
+
+__webpack_require__(/*! ./updateBlackboard.scss */ "./client/pages/updateBlackboard/updateBlackboard.scss");
+
+var _Page2 = __webpack_require__(/*! ../Page */ "./client/pages/Page.js");
+
+var _Page3 = _interopRequireDefault(_Page2);
+
+var _Header = __webpack_require__(/*! ../../components/header/Header */ "./client/components/header/Header.js");
+
+var _Header2 = _interopRequireDefault(_Header);
+
+var _BlackboardForm = __webpack_require__(/*! ../../components/blackboardForm/BlackboardForm */ "./client/components/blackboardForm/BlackboardForm.js");
+
+var _BlackboardForm2 = _interopRequireDefault(_BlackboardForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var UpdateBlackboard = function (_Page) {
+  _inherits(UpdateBlackboard, _Page);
+
+  function UpdateBlackboard() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, UpdateBlackboard);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = UpdateBlackboard.__proto__ || Object.getPrototypeOf(UpdateBlackboard)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      blackboard: null
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(UpdateBlackboard, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var id = this.props.id;
+
+
+      (0, _BlackboardProvider.getBlackboard)(id).then(function (blackboard) {
+        return _this2.setState({ blackboard: blackboard.data });
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'add-blackboard container-fluid' },
+        _react2.default.createElement(
+          _Header2.default,
+          { title: 'Create a blackboard.' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col col-12 col-md-6' },
+            _react2.default.createElement(
+              'h3',
+              { className: 'mb-3' },
+              'Complete the form to create a blackboard'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'container form py-5' },
+          this.state.blackboard ? _react2.default.createElement(_BlackboardForm2.default, { history: this.props.history, user: this.props.rootData.user, blackboard: this.state.blackboard }) : ''
+        )
+      );
+    }
+  }]);
+
+  return UpdateBlackboard;
+}(_Page3.default);
+
+exports.default = (0, _reactRouterDom.withRouter)(UpdateBlackboard);
+
+/***/ }),
+
+/***/ "./client/pages/updateBlackboard/updateBlackboard.scss":
+/*!*************************************************************!*\
+  !*** ./client/pages/updateBlackboard/updateBlackboard.scss ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "./client/providers/AxiosInstance.js":
 /*!*******************************************!*\
   !*** ./client/providers/AxiosInstance.js ***!
@@ -1693,7 +1967,7 @@ exports.default = axiosInstance;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addBlackboard = exports.getMyBlackboards = undefined;
+exports.deleteBlackboard = exports.updateBlackboard = exports.addBlackboard = exports.getBlackboard = exports.getMyBlackboards = undefined;
 
 var _AxiosInstance = __webpack_require__(/*! ./AxiosInstance */ "./client/providers/AxiosInstance.js");
 
@@ -1705,8 +1979,20 @@ var getMyBlackboards = exports.getMyBlackboards = function getMyBlackboards() {
   return _AxiosInstance2.default.get('/blackboard/me');
 };
 
+var getBlackboard = exports.getBlackboard = function getBlackboard(id) {
+  return _AxiosInstance2.default.get('/blackboard/' + id);
+};
+
 var addBlackboard = exports.addBlackboard = function addBlackboard(blackboard) {
   return _AxiosInstance2.default.post('/blackboard', blackboard);
+};
+
+var updateBlackboard = exports.updateBlackboard = function updateBlackboard(id, blackboard) {
+  return _AxiosInstance2.default.put('/blackboard/' + id, blackboard);
+};
+
+var deleteBlackboard = exports.deleteBlackboard = function deleteBlackboard(id) {
+  return _AxiosInstance2.default.delete('/blackboard/' + id);
 };
 
 /***/ }),
@@ -1825,7 +2111,7 @@ var RootActions = exports.RootActions = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.emitDraw = exports.subscribe = undefined;
+exports.emitDraw = exports.unsubscribe = exports.subscribe = undefined;
 
 var _socket = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
 
@@ -1838,13 +2124,18 @@ var socket = (0, _socket2.default)();
 var callbacks = {
   onDraw: function onDraw(cb) {
     socket.on('draw', cb);
-    return this;
+    return callbacks;
   }
 };
 
 var subscribe = exports.subscribe = function subscribe(id) {
   socket.emit('join', id);
   return callbacks;
+};
+
+var unsubscribe = exports.unsubscribe = function unsubscribe(id) {
+  socket.removeAllListeners('draw');
+  socket.emit('leave', id);
 };
 
 var emitDraw = exports.emitDraw = function emitDraw(id, oX, oY, dX, dY) {

@@ -15,7 +15,7 @@ export const AddBlackboardLink = () => {
   )
 }
 
-export const BlackboardLink = ({blackboard}) => {
+export const BlackboardLink = ({ blackboard }) => {
   return (
     <div className="blackboard-link col col-12 col-sm-6 col-md-4 col-lg-3 p-2">
       <Link className="card board p-2" to={`/app/blackboard/${blackboard._id}`}>
@@ -25,6 +25,9 @@ export const BlackboardLink = ({blackboard}) => {
           {ctx => ctx.user && ctx.user._id == blackboard.owner ? <span className="material-icons text-right">person</span> : <span className="material-icons text-right">share</span>}
         </RootConsumer>
       </Link>
+      <RootConsumer>
+        {ctx => ctx.user && ctx.user._id == blackboard.owner ? <Link className="btn btn-primary text-white edit-button" to={`/app/updateblackboard/${blackboard._id}`}>Edit</Link> : ''}
+      </RootConsumer>
     </div>
   )
 }

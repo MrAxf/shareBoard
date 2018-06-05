@@ -1,13 +1,26 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
+import { getBlackboard } from '../../providers/BlackboardProvider'
 
-import './addBlackboard.scss'
+import './updateBlackboard.scss'
 
 import Page from '../Page';
 import Header from '../../components/header/Header'
 import BlackboardForm from '../../components/blackboardForm/BlackboardForm'
 
-class AddBlackboard extends Page {
+class UpdateBlackboard extends Page {
+
+  state = {
+    blackboard: null
+  }
+
+  componentDidMount(){
+    const { id } = this.props
+
+    getBlackboard(id)
+      .then(blackboard => this.setState({blackboard: blackboard.data}))
+      .catch(err => console.log(err))
+  }
 
   render() {
     return (
@@ -18,11 +31,13 @@ class AddBlackboard extends Page {
           </div>
         </Header>
         <div className="container form py-5">
-          <BlackboardForm history = { this.props.history } user={this.props.rootData.user}/>
+          {
+            this.state.blackboard ? <BlackboardForm history = { this.props.history } user={this.props.rootData.user} blackboard={this.state.blackboard} /> : ''
+          }
         </div>
       </div>
     )
   }
 }
 
-export default withRouter(AddBlackboard)
+export default withRouter(UpdateBlackboard)

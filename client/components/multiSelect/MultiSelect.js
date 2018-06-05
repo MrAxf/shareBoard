@@ -8,7 +8,7 @@ import Avatar from '../avatar/Avatar'
 export default class MultiSelect extends Component {
 
   state = {
-    selected: [],
+    selected: this.props.defaultValue ? this.props.defaultValue : [],
     searchedUsers: [],
     dropdownVisible: false,
     findingUsers: false
