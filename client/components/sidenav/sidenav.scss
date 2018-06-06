@@ -1,8 +1,11 @@
+@import '../../theme';
+
 .sidenav{
   float: left;
   width: 280px;
   height: 100%;
   transition: width 0.5s ease-in-out;
+  border-right: solid 1px theme-color-level("primary", 5);
   &.closed{
     width: 0px;
   }
