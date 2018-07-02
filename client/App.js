@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import Layout from './components/layout/Layout'
 import { RootProvider, RootConsumer, RootActions } from './providers/RootProvider'
 
-import Projects from './pages/proyects/Projects'
+import Projects from './pages/projects/Projects'
 import AddBlackboard from './pages/addBlackboard/AddBlackboard'
 import UpdateBlackboard from './pages/updateBlackboard/UpdateBlackboard'
 import Blackboard from './pages/blackboard/Blackboard'

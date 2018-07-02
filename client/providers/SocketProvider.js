@@ -19,6 +19,6 @@ export const unsubscribe = (id) => {
   socket.emit('leave', id)
 }
 
-export const emitDraw = (id, oX, oY, dX, dY) => {
-  socket.emit('draw', JSON.stringify({id, "payload":{ oX, oY, dX, dY } }))
+export const emitDraw = (id, oX, oY, dX, dY, size, color) => {
+  socket.emit('draw', JSON.stringify({id, "payload":{ oX, oY, dX, dY, size, color } }))
 }

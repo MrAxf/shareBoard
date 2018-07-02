@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { subscribe, unsubscribe, emitDraw } from '../../providers/SocketProvider'
+import { getBrush } from '../../providers/Brushprovider'
 
 import './blackboard.scss'
 
@@ -31,8 +32,8 @@ class Blackboard extends Page {
     
     subscribe(id)
       .onDraw((data => {
-        const { oX, oY, dX, dY } = JSON.parse(data)
-        this.draw(oX, oY, dX, dY)
+        const { oX, oY, dX, dY, size, color } = JSON.parse(data)
+        this.draw(oX, oY, dX, dY, size, color)
       }).bind(this))
   }
 
@@ -60,17 +61,20 @@ class Blackboard extends Page {
 
   handleMouseMove(e){
     const { id } = this.props
+    const { color, size } = getBrush()
     if (this.drawing){
       const { x, y } = this.getMousePos(e)
       //this.draw(this.prevCoords.x, this.prevCoords.y, x, y)
-      emitDraw(id, this.prevCoords.x, this.prevCoords.y, x, y)
+      emitDraw(id, this.prevCoords.x, this.prevCoords.y, x, y, size, color)
       this.prevCoords = { x, y }
     }
   }
 
-  draw(oX, oY, dX, dY) {
-    this.ctx.strokeStyle="white";
-    this.ctx.lineWidth=3;
+  draw(oX, oY, dX, dY, size, color) {
+    this.ctx.strokeStyle=color;
+    this.ctx.lineWidth=size;
+    this.ctx.lineCap='round'
+    this.ctx.lineJoin='round'
     this.ctx.beginPath();
     this.ctx.moveTo(Math.round(oX), Math.round(oY))
     this.ctx.lineTo(Math.round(dX), Math.round(dY))

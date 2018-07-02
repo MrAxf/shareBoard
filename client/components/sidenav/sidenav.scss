@@ -6,7 +6,34 @@
   height: 100%;
   transition: width 0.5s ease-in-out;
   border-right: solid 1px theme-color-level("primary", 5);
+  overflow-x: hidden;
+  overflow-y: auto;
   &.closed{
     width: 0px;
+  }
+
+  .rangeslider-horizontal {
+    height: 5px;
+    border-radius: 0%;
+    .rangeslider__fill{
+      background-color: theme-color("success");
+    }
+    .rangeslider__handle{
+      border-radius: 0%;
+      height: 25px;
+      width: 15px;
+      background-color: theme-color-level("primary", 5);
+      border: none;
+      &::after{
+        content: none;
+      }
+    }
+  }
+
+  .rangeslider {
+    box-shadow: none;
+    .rangeslider__fill{
+      box-shadow: none;
+    }
   }
 }
